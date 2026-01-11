@@ -1,0 +1,17 @@
+.layout-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.footer {
+    text-align: center;
+    color: #fff;
+    background-color:#009B9E;
+    font-family: fantasy;
+    letter-spacing: 5px;
+  
+  
+  }
+

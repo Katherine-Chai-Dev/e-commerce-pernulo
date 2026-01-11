@@ -1,0 +1,168 @@
+.header {
+  color: #fff;
+  min-height: 64px;
+  height: auto;
+  padding-inline: 48px;
+  line-height: normal;
+  background-color: #009B9E;
+  padding-block: 12px;
+}
+
+
+.header-content{
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  position: relative;
+
+}
+
+.brand{
+  display: flex;
+  flex-direction: column;
+
+}
+
+
+
+.brand-name{
+  font-family: sans-serif;
+  font-size: clamp(18px, 3vw, 24px);
+  text-align: center;
+}
+
+.brand-describe{
+  display: flex;
+  justify-content: center; 
+  font-family: cursive;
+  font-size: clamp(14px, 2.5vw, 20px);
+  
+}
+
+.header-middle{
+  flex: 1; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+
+ .header-right {
+  position: absolute; 
+  left:87%;
+  font-size: clamp(20px, 3vw, 28px);
+  color: rgb(73, 72, 72);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+} 
+
+
+
+.search-button{ 
+  font-size: clamp(20px, 3vw, 28px);
+  background-color: #009B9E;
+  color: #fff;
+  }
+
+
+.nav-logo {
+  position: absolute;
+  left: 9%;                  
+  top: 50%;                 
+  transform: translateY(-31%); 
+  cursor: pointer;
+  height: clamp(70px, 9vw, 120px);
+
+}
+.account-icon{
+  color: #fff;
+}
+
+@media screen and (max-width: 1700px) {
+  .nav-logo {
+    left: 40px;
+  }
+  .header-right {
+    left: 93%;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .nav-logo {
+    left: 30px;
+  }
+  .header-right {
+    left: 92%;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .nav-logo {
+    left: 20px;
+  }
+  .header-right {
+    left: 91%;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .nav-logo {
+    left: 15px;
+    height: clamp(60px, 8vw, 80px);
+  }
+  .header-right {
+    left: 90%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .header {
+    padding-inline: 30px;
+  }
+  .nav-logo {
+    left: 10px;
+    height: clamp(50px, 7vw, 70px);
+  }
+  .header-right {
+    left: 89%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .header {
+    padding-inline: 15px;
+  }
+  .nav-logo {
+    left: 5px;
+    height: clamp(40px, 6vw, 55px);
+  }
+  .header-right {
+    left: 87%;
+    gap: 3px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .header {
+    padding-inline: 10px;
+  }
+  .nav-logo {
+    left: 5px;
+    height: clamp(35px, 5vw, 45px);
+  }
+  .header-right {
+    left: 80%;
+    gap: 2px;
+  }
+  .brand-name {
+    font-size: 16px;
+  }
+  .brand-describe {
+    font-size: 12px;
+  }
+}
+
+

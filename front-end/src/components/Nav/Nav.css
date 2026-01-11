@@ -1,0 +1,134 @@
+
+.nav-container{
+    width: 100%;
+}
+
+.nav{
+    background-color: #009B9E; 
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: none;
+    justify-content: center;
+    margin: 20px 0 10px 0;
+
+}
+
+.ant-menu-title-content{
+    color: #fff !important;
+}
+
+
+.nav.ant-menu-horizontal {
+    border-bottom: none !important;
+}
+
+.nav .ant-menu-item::after,
+.nav .ant-menu-submenu::after {
+    border-bottom: none !important;
+}
+
+.nav .ant-menu-item:hover::after,
+.nav .ant-menu-submenu:hover::after {
+    border-bottom: none !important;
+}
+
+
+
+.ant-menu-item-selected {
+    color: rgb(2, 99, 2) !important;
+}
+
+
+
+.ant-menu-submenu-popup .ant-menu-item {
+    text-align: center;
+
+}
+
+@media (max-width: 1200px) {
+    .nav {
+        font-size: 15px;
+    }
+    
+    .nav .ant-menu-item,
+    .nav .ant-menu-submenu-title {
+        padding-inline: 18px !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .nav {
+        font-size: 14px;
+    }
+    
+    .nav .ant-menu-item,
+    .nav .ant-menu-submenu-title {
+        padding-inline: 16px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav {
+        font-size: 13px;
+    }
+    
+    .nav .ant-menu-item,
+    .nav .ant-menu-submenu-title {
+        padding-inline: 14px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav {
+        font-size: 12px;
+    }
+    
+    .nav .ant-menu-item,
+    .nav .ant-menu-submenu-title {
+        padding-inline: 12px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav {
+        font-size: 11px;
+    }
+    
+    .nav .ant-menu-item,
+    .nav .ant-menu-submenu-title {
+        padding-inline: 10px !important;
+    }
+}
+
+@media (max-width: 400px) {
+    .nav {
+        font-size: 10px;
+    }
+    
+    .nav .ant-menu-item,
+    .nav .ant-menu-submenu-title {
+        padding-inline: 8px !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .nav {
+        font-size: 9px;
+    }
+    
+    .nav .ant-menu-item,
+    .nav .ant-menu-submenu-title {
+        padding-inline: 6px !important;
+    }
+}
+
+@media (max-width: 280px) {
+    .nav {
+        font-size: 8px;
+    }
+    
+    .nav .ant-menu-item,
+    .nav .ant-menu-submenu-title {
+        padding-inline: 4px !important;
+    }
+}
