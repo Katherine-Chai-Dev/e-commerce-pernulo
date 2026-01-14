@@ -8,7 +8,6 @@ const Footer = ()=>{
   theme={{
     token: {
         fontSize:25
-      /* here is your global tokens */
     },
   }}
 >

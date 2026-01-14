@@ -27,7 +27,7 @@ const Earrings = () => {
                                 sm={12}
                                 md={8}
                                 lg={6}
-                                xl={6}
+                                xl={4}
                                 xxl={4}
                                 key={product.id}
                             >

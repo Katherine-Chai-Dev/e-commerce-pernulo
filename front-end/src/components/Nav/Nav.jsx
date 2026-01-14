@@ -38,16 +38,6 @@ const Nav = () => {
     {
       label: 'About Us',
       key: '/about-us',
-      // children: [
-      //   {
-      //     label: 'Jewelry Designer',
-      //     key: '/about-us/designer' 
-      //   },
-      //   {
-      //     label: 'Tech Support',
-      //     key: '/about-us/support'
-      //   }
-      // ]
     },
     {
       label: 'Contact',
