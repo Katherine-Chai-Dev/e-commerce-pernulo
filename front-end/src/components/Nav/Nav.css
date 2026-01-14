@@ -33,12 +33,10 @@
 }
 
 
-
-.ant-menu-item-selected {
-    color: rgb(2, 99, 2) !important;
+.nav .ant-menu-item-selected .ant-menu-title-content,
+.nav .ant-menu-item-active .ant-menu-title-content {
+    color:  black!important; 
 }
-
-
 
 .ant-menu-submenu-popup .ant-menu-item {
     text-align: center;

@@ -52,6 +52,7 @@
     border-radius: 15px;
     color: rgb(110, 108, 108);
     font-weight: bold;
+    background-color: #fff !important;
 }
 
 .card-button:hover {

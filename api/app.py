@@ -21,30 +21,48 @@ def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
 # Image upload handling
-UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads', 'products')
+# UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads', 'products')
+# ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif'}
+# os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# def allowed_file(filename):
+#     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# def save_image(file):
+#     filename = secure_filename(file.filename)
+#     import time
+#     name, ext = os.path.splitext(filename)
+#     filename = f"{name}_{int(time.time())}{ext}"
+#     filepath = os.path.join(UPLOAD_FOLDER, filename)
+#     file.save(filepath)
+#     return filename
+
+
+
+UPLOAD_BASE = os.path.join(os.path.dirname(__file__), 'uploads')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif'}
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(os.path.join(UPLOAD_BASE, 'products'), exist_ok=True)
+os.makedirs(os.path.join(UPLOAD_BASE, 'profile'), exist_ok=True)
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def save_image(file):
+def save_image(file, folder='products'):
+    if folder not in ['products', 'profile']:
+        raise ValueError("folder must be 'products' or 'profile'")
     filename = secure_filename(file.filename)
     import time
     name, ext = os.path.splitext(filename)
     filename = f"{name}_{int(time.time())}{ext}"
-    filepath = os.path.join(UPLOAD_FOLDER, filename)
+    filepath = os.path.join(UPLOAD_BASE, folder, filename)
     file.save(filepath)
     return filename
 
-@app.route('/uploads/products/<filename>')
-def serve_image(filename):
-    return send_from_directory(UPLOAD_FOLDER, filename)
-
-
-# @app.route('/uploads/profile/<filename>')
-# def serve_image(filename):
-#     return send_from_directory(UPLOAD_FOLDER, filename)
+@app.route('/uploads/<folder>/<filename>')
+def serve_image(folder, filename):
+    if folder not in ['products', 'profile']:
+        return "Invalid folder", 404
+    return send_from_directory(os.path.join(UPLOAD_BASE, folder), filename)
 
 
 # Get method

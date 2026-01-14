@@ -1,0 +1,158 @@
+.about-us-container {
+    padding: 48px 24px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+    min-height: 100vh;
+  }
+  
+  .about-us-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Header Section */
+  .about-us-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  
+  .about-us-title {
+    margin-bottom: 8px !important;
+    color: #1a1a2e;
+  }
+  
+  .about-us-subtitle {
+    font-size: 18px;
+  }
+  
+  /* Team Cards */
+  .team-card {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    height: 100%;
+  }
+  
+  .team-card .ant-card-body {
+    padding: 0;
+  }
+  
+  .card-header {
+    padding: 32px 24px;
+    text-align: center;
+  }
+  
+  .card-header.engineer {
+    background: linear-gradient(135deg, rgba(24, 144, 255, 0.12) 0%, rgba(24, 144, 255, 0.25) 100%);
+  }
+  
+  .card-header.designer {
+    background: linear-gradient(135deg, rgba(235, 47, 150, 0.12) 0%, rgba(235, 47, 150, 0.25) 100%);
+  }
+  
+  .member-avatar {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+  
+  .member-avatar.engineer {
+    border: 4px solid #1890ff;
+  }
+  
+  .member-avatar.designer {
+    border: 4px solid #eb2f96;
+  }
+  
+  .member-name {
+    margin-top: 16px !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .role-tag {
+    font-size: 14px;
+    padding: 4px 16px;
+    border-radius: 20px;
+  }
+  
+  /* Card Body */
+  .card-body {
+    padding: 24px;
+  }
+  
+  .education-text {
+    font-size: 14px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  
+  .member-description {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  
+  .skills-divider {
+    margin: 16px 0;
+  }
+  
+  /* Skills Section */
+  .skills-section {
+    margin-bottom: 12px;
+  }
+  
+  .skills-category {
+    text-transform: capitalize;
+    font-size: 13px;
+    color: #888;
+  }
+  
+  .skills-tags {
+    margin-top: 8px;
+  }
+  
+  .skill-tag {
+    margin-bottom: 6px;
+    border-radius: 4px;
+    background: #f0f2f5;
+    border: none;
+  }
+  
+  /* CTA Section */
+  .cta-section {
+    text-align: center;
+    margin-top: 48px;
+    padding: 32px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  }
+  
+  .cta-title {
+    margin-bottom: 8px !important;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .about-us-container {
+      padding: 24px 16px;
+    }
+  
+    .about-us-header {
+      margin-bottom: 32px;
+    }
+  
+    .about-us-subtitle {
+      font-size: 16px;
+    }
+  
+    .card-header {
+      padding: 24px 16px;
+    }
+  
+    .card-body {
+      padding: 16px;
+    }
+  
+    .cta-section {
+      padding: 24px 16px;
+      margin-top: 32px;
+    }
+  }

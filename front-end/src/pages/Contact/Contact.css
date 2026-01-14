@@ -1,0 +1,174 @@
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 60px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-background {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    opacity: 0.08;
+    animation: gradientShift 15s ease infinite;
+    z-index: 0;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+}
+
+.contact-card {
+    width: 100%;
+    max-width: 550px;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1;
+    position: relative;
+}
+
+.contact-card .ant-card-body {
+    padding: 50px 40px;
+}
+
+.contact-content {
+    width: 100%;
+    text-align: center;
+}
+
+.contact-icon-wrapper {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    margin-bottom: 10px;
+}
+
+.contact-icon {
+    font-size: 48px;
+    color: #ffffff;
+}
+
+.contact-title {
+    margin: 0 !important;
+    font-size: 36px !important;
+    font-weight: 700 !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.contact-text {
+    font-size: 18px;
+    color: #6b7280;
+    line-height: 1.7;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.contact-email-wrapper {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    padding: 16px 28px;
+    border-radius: 12px;
+    margin: 10px 0;
+}
+
+.contact-email {
+    font-size: 20px;
+    color: #374151;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.contact-button {
+    height: 54px;
+    padding: 0 40px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 27px;
+    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
+    transition: all 0.3s ease;
+}
+
+.contact-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.45);
+    background: linear-gradient(135deg, #5a6fd6 0%, #6a4190 100%);
+}
+
+.contact-button:active {
+    transform: translateY(-1px);
+}
+
+/* Card hover effect */
+.contact-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .contact-container {
+        padding: 30px 16px;
+        min-height: auto;
+    }
+
+    .contact-card .ant-card-body {
+        padding: 35px 25px;
+    }
+
+    .contact-icon-wrapper {
+        width: 80px;
+        height: 80px;
+    }
+
+    .contact-icon {
+        font-size: 36px;
+    }
+
+    .contact-title {
+        font-size: 28px !important;
+    }
+
+    .contact-text {
+        font-size: 16px;
+    }
+
+    .contact-email-wrapper {
+        padding: 12px 20px;
+    }
+
+    .contact-email {
+        font-size: 16px;
+    }
+
+    .contact-button {
+        height: 48px;
+        padding: 0 30px;
+        font-size: 16px;
+    }
+}

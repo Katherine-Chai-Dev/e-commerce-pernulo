@@ -20,16 +20,15 @@ const Home = () => {
                     <Space className='list-name'>Popular Products</Space>
                     <Row gutter={[20, 30]}>
                         {products.map((product) => (
+
                             <Col
                                 xs={24}
                                 sm={12}
                                 md={8}
                                 lg={6}
-                                xl={6}
+                                xl={4}
                                 xxl={4}
                                 key={product.id}
-
-                            
                             >
                                 <CardComponent product={product} />
                             </Col>
