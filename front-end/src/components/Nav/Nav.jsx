@@ -1,13 +1,16 @@
-
+import "./Nav.css"
 import React, { useState, useRef, useEffect } from 'react';
-import {useNavigate } from 'react-router-dom';
+import {useNavigate, useLocation } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import { Menu } from 'antd';
-import "./Nav.css"
+import { useProducts } from '../../context/Context';
 
 const Nav = () => {
   const navRef = useRef(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { selectedNav, setSelectedNav } = useProducts();
+  const location = useLocation();
+
 
   const items = [
     {
@@ -45,7 +48,18 @@ const Nav = () => {
     },
   ];
 
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const matchedItem = items.find(item => item.key === currentPath);
+    if (matchedItem) {
+      setSelectedNav(currentPath);
+    } else{
+      setSelectedNav(null); 
+    }
+  }, [location.pathname]);
+
   const handleClick = (e) => {
+    setSelectedNav(e.key);
     navigate(e.key);
 };
 
@@ -75,6 +89,7 @@ const Nav = () => {
           items={items} 
           className="nav"
           onClick={handleClick}
+          selectedKeys={selectedNav ? [selectedNav] : []} 
         />
       </div >
     </ConfigProvider>

@@ -5,6 +5,7 @@ const ProductContext = createContext();
 export function ProductProvider({ children }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedNav, setSelectedNav] = useState(null);
 
 
     const getProducts = async () => {
@@ -27,7 +28,7 @@ export function ProductProvider({ children }) {
 
 
     return (
-        <ProductContext.Provider value={{ products, setProducts, loading }}>
+        <ProductContext.Provider value={{ products, setProducts, loading, selectedNav, setSelectedNav }}>
             {children}
         </ProductContext.Provider>
     );

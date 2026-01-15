@@ -14,6 +14,7 @@ import Broochs from "./pages/Broochs/Broochs"
 import AllPearlJewelry from './pages/AllPearlJewelry/AllPearlJewelry';
 import PeoductDetail from "../src/pages/ProductDetail/ProductDetail"
 import { ProductProvider } from './context/Context';
+import SearchResults from "./pages/SearchResults/SearchResults"
 
 const App = () => (
   <BrowserRouter>
@@ -32,6 +33,7 @@ const App = () => (
                 <Route path='/shop/all-pearl-jewelry'element={<AllPearlJewelry/>} />
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/search" element={<SearchResults />} />
             </Routes>
             </div>
             <Footer />

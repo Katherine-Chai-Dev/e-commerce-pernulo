@@ -1,0 +1,17 @@
+
+.search-results {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.search-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.result-wrapper{
+    margin-top: 20px
+}
