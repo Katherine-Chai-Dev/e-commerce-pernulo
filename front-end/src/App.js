@@ -13,12 +13,15 @@ import Bracelets from './pages/Bracelets/Bracelets';
 import Broochs from "./pages/Broochs/Broochs"
 import AllPearlJewelry from './pages/AllPearlJewelry/AllPearlJewelry';
 import PeoductDetail from "../src/pages/ProductDetail/ProductDetail"
-import { ProductProvider } from './context/Context';
+import { ProductProvider } from './context/ProductContext';
+import { UserProvider } from './context/UserContext';
 import SearchResults from "./pages/SearchResults/SearchResults"
+import LogIn from './pages/LogIn/LogIn';
 
 const App = () => (
   <BrowserRouter>
      <ProductProvider>
+     <UserProvider>
   <Flex gap="middle" wrap>
     <Layout className="layout-container">
       <Header/>
@@ -34,11 +37,13 @@ const App = () => (
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/search" element={<SearchResults />} />
+                <Route path="/log-in" element={<LogIn/>} />
             </Routes>
             </div>
             <Footer />
     </Layout>
   </Flex>
+  </UserProvider>
   </ProductProvider>
   </BrowserRouter>
 );

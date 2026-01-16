@@ -1,3 +1,4 @@
+
 .header {
   color: #fff;
   min-height: 64px;
@@ -42,7 +43,6 @@
   height: clamp(70px, 9vw, 120px);
 }
 
-
 .header-right {
   position: absolute;
   right: 180px;
@@ -50,7 +50,6 @@
   align-items: center;
   gap: 10px;
   margin-top: 10px;
-  
 }
 
 .header-icons {
@@ -59,6 +58,7 @@
   gap: 12px;
 }
 
+/* Search Styles */
 .account-icon,
 .search-icon {
   color: #fff;
@@ -72,7 +72,6 @@
   opacity: 0.8;
 }
 
-
 .search-container {
   width: 0;
   overflow: hidden;
@@ -82,7 +81,6 @@
 .search-container.expanded {
   width: 300px;
 }
-
 
 .search-button {
   width: 300px;
@@ -122,31 +120,72 @@
   display: none;
 }
 
+/* User Account Styles (when logged in) */
+.user-account {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 10px;
+  color: white;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
 
+.user-account:hover {
+  opacity: 0.9;
+}
+
+.user-account .user-icon {
+  font-size: 24px;
+  color: white;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.user-greeting {
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  max-width: 90px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-account-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+}
+
+/* Media Queries*/
 @media screen and (max-width: 1700px) {
   .nav-logo {
     left: 40px;
   }
-
-
 }
+
 @media screen and (max-width: 1500px) {
   .nav-logo {
     left: 30px;
   }
-  .header-right {    
-    right: 45px ;
-}
-  
+  .header-right {
+    right: 45px;
+  }
 }
 
 @media screen and (max-width: 1300px) {
   .nav-logo {
     left: 20px;
   }
-  .header-right {    
-    right: 40px ;
-}
+  .header-right {
+    right: 40px;
+  }
 }
 
 @media screen and (max-width: 1100px) {
@@ -178,6 +217,13 @@
   }
   .search-button {
     width: 200px;
+  }
+  /* Hide user name on tablet */
+  .user-info {
+    display: none;
+  }
+  .user-account {
+    padding: 4px;
   }
 }
 
@@ -233,6 +279,9 @@
   }
   .account-icon,
   .search-icon {
+    font-size: 18px;
+  }
+  .user-account .user-icon {
     font-size: 18px;
   }
 }

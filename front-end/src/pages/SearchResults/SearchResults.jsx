@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams,useNavigate } from 'react-router-dom';
 import { Row, Col, Layout, Spin, Space,Button,Result  } from 'antd';
 import CardComponent from '../../components/Card/CardComponent';
-import { useProducts } from '../../context/Context';
+import { useProducts } from '../../context/ProductContext';
 
 
 const SearchResults = () => {
