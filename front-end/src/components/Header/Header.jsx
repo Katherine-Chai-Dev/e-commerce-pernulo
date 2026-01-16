@@ -1,39 +1,75 @@
 import React, { useState } from "react";
 import Nav from "../Nav/Nav";
 import "./Header.css";
-import { Layout, Tooltip, ConfigProvider, Input } from 'antd';
-import { SearchOutlined, UserOutlined, CloseOutlined } from '@ant-design/icons';
+import { Layout, Tooltip, ConfigProvider, Input, Dropdown, Space } from 'antd';
+import { SearchOutlined, UserOutlined, CloseOutlined,ShoppingCartOutlined, LogoutOutlined, DownOutlined, SettingOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
-import { useProducts } from '../../context/Context';
+import { useProducts } from '../../context/ProductContext';
+import { useUser } from "../../context/UserContext"
+
 
 const { Search } = Input;
-const onSearch = (value, _e, info) => console.log("info?.source",info?.source, "value",value);
+// const onSearch = (value, _e, info) => console.log("info?.source", info?.source, "value", value);
+
+
+
+
 
 const Header = () => {
     const [showSearch, setShowSearch] = useState(false);
     const [searchValue, setSearchValue] = useState("")
     const navigate = useNavigate();
     const { setSelectedNav } = useProducts();
+    const { user, logout } = useUser()
+    console.log("user", user)
+
+    const items = [
+        {
+            key: '1',
+            label: 'My Account',
+            disabled: true,
+            icon: <UserOutlined />,
+            // onClick: () => navigate('/account'),
+        },
+        {
+            key: '2',
+            label: 'Cart',
+            icon: <ShoppingCartOutlined />,
+            // onClick: () => navigate('/cart'),
+        },
+        {
+            type: 'divider',
+        },
+        {
+            key: '3',
+            label: 'Sign Out',
+            icon: <LogoutOutlined />,
+            onClick: () => {
+                logout();
+                navigate('/');
+            },
+        },
+    ];
 
     const toggleSearch = () => {
         setShowSearch(!showSearch);
     };
 
-   const  showSearchContent =(e)=>{
-    setSearchValue(e.target.value)
-   }
+    const showSearchContent = (e) => {
+        setSearchValue(e.target.value)
+    }
 
-    const handleSearch = (value)=>{
+    const handleSearch = (value) => {
         if (value.trim()) {
             setSelectedNav(null);
             navigate(`/search?q=${encodeURIComponent(value)}`);
-            setShowSearch(false); 
-        }else{
+            setShowSearch(false);
+        } else {
             navigate('/');
         }
         setShowSearch(false)
     }
-    console.log(searchValue)
+
 
     return (
         <ConfigProvider
@@ -71,19 +107,28 @@ const Header = () => {
 
                         <div className="header-icons">
                             {showSearch ? (
-                                <CloseOutlined 
-                                    className="search-icon" 
+                                <CloseOutlined
+                                    className="search-icon"
                                     onClick={toggleSearch}
                                 />
                             ) : (
                                 <Tooltip title="Search">
-                                    <SearchOutlined 
-                                        className="search-icon" 
+                                    <SearchOutlined
+                                        className="search-icon"
                                         onClick={toggleSearch}
                                     />
                                 </Tooltip>
                             )}
-                            <UserOutlined className="account-icon" />
+                            {user ? 
+                        <Dropdown menu={{ items }} placement="bottomRight">
+                        <div className="user-account">
+                            <UserOutlined className="user-icon" />
+                            <div className="user-info">
+                                <span className="user-greeting">Hi, {user.name}</span>
+                                <span className="user-account-text">Account</span>
+                            </div>
+                        </div>
+                    </Dropdown>: <UserOutlined className="account-icon" onClick={() => { navigate('/log-in'); }} />}
                         </div>
                     </div>
                 </div>

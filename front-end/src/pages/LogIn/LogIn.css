@@ -1,0 +1,214 @@
+.login-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f4f6;
+    padding: 40px;
+  }
+  .login-container {
+    width: 100%;
+    max-width: 420px;
+    background-color: #fff;
+    border-radius: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1f2937;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  
+  .login-subtitle {
+    font-size: 0.9rem;
+    color: #6b7280;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .google-login-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+
+  .google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #374151;
+    background-color: #f3f4f6;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+  
+  .google-btn:hover {
+    background-color: #e5e7eb;
+  }
+  
+  .google-btn img {
+    height: 20px;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    margin: 24px 0;
+  }
+  
+  .divider hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid #d1d5db;
+  }
+  
+  .divider span {
+    padding: 0 16px;
+    color: #9ca3af;
+    font-size: 0.85rem;
+  }
+  
+  
+  .login-form label {
+    font-size: 0.85rem;
+    color: #374151;
+    margin-bottom: 6px;
+  }
+  
+
+  .login-form input[type="email"],
+  .login-form input[type="password"] {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 0.9rem;
+    color: #1f2937;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  .login-form input[type="email"]:focus,
+  .login-form input[type="password"]:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  }
+  
+  .login-form input::placeholder {
+    color: #9ca3af;
+  }
+  
+
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  
+  .checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #6366f1;
+    cursor: pointer;
+  }
+  
+  .checkbox-label span {
+    font-size: 0.85rem;
+    color: #4b5563;
+  }
+  
+  .forgot-link {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #6366f1;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .forgot-link:hover {
+    color: #4f46e5;
+  }
+  
+
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #6366f1;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 20px;
+  }
+  
+  .submit-btn:hover {
+    background-color: #4f46e5;
+  }
+  
+  .submit-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.4);
+  }
+  
+
+  .signup-text {
+    font-size: 0.85rem;
+    color: #6b7280;
+    text-align: center;
+  }
+  
+  .signup-text a {
+    font-weight: 600;
+    color: #6366f1;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .signup-text a:hover {
+    color: #4f46e5;
+  }
+
+  @media (max-width: 480px) {
+    .login-container {
+      padding: 24px;
+    }
+    
+    .login-title {
+      font-size: 1.75rem;
+    }
+    
+    .form-options {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+  }
