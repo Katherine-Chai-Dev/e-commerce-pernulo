@@ -4,7 +4,7 @@ import { Flex, Layout } from 'antd';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import Home from"./pages/Home/Home";
+import Home from "./pages/Home/Home";
 import AboutUs from "./pages/AboutUs/AboutUs"
 import Contact from './pages/Contact/Contact';
 import Earrings from './pages/Earrings/Earrings';
@@ -17,34 +17,40 @@ import { ProductProvider } from './context/ProductContext';
 import { UserProvider } from './context/UserContext';
 import SearchResults from "./pages/SearchResults/SearchResults"
 import LogIn from './pages/LogIn/LogIn';
+import Register from './pages/Register/Register';
+import ForgotPassword from './pages/LogIn/ForgotPassword';
+import ResetPassword from './pages/LogIn/ResetPassword';
 
 const App = () => (
   <BrowserRouter>
-     <ProductProvider>
-     <UserProvider>
-  <Flex gap="middle" wrap>
-    <Layout className="layout-container">
-      <Header/>
-      <div className="main-content">
-      <Routes>
+    <ProductProvider>
+      <UserProvider>
+        <Flex gap="middle" wrap>
+          <Layout className="layout-container">
+            <Header />
+            <div className="main-content">
+              <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/product-detail/:id" element={<PeoductDetail />} />
                 <Route path="/shop/earrings" element={<Earrings />} />
                 <Route path="/shop/necklaces" element={<Necklaces />} />
-                <Route path="/shop/bracelets" element={<Bracelets/>} />
+                <Route path="/shop/bracelets" element={<Bracelets />} />
                 <Route path="/shop/broochs" element={<Broochs />} />
-                <Route path='/shop/all-pearl-jewelry'element={<AllPearlJewelry/>} />
+                <Route path='/shop/all-pearl-jewelry' element={<AllPearlJewelry />} />
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/search" element={<SearchResults />} />
-                <Route path="/log-in" element={<LogIn/>} />
-            </Routes>
+                <Route path="/login" element={<LogIn />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+              </Routes>
             </div>
             <Footer />
-    </Layout>
-  </Flex>
-  </UserProvider>
-  </ProductProvider>
+          </Layout>
+        </Flex>
+      </UserProvider>
+    </ProductProvider>
   </BrowserRouter>
 );
 

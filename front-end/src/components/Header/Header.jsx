@@ -1,27 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "../Nav/Nav";
 import "./Header.css";
-import { Layout, Tooltip, ConfigProvider, Input, Dropdown, Space } from 'antd';
-import { SearchOutlined, UserOutlined, CloseOutlined,ShoppingCartOutlined, LogoutOutlined, DownOutlined, SettingOutlined } from '@ant-design/icons';
-import { useNavigate } from "react-router-dom";
+import { Layout, Tooltip, ConfigProvider, Input, Dropdown } from 'antd';
+import { SearchOutlined, UserOutlined, CloseOutlined, ShoppingCartOutlined, LogoutOutlined } from '@ant-design/icons';
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useProducts } from '../../context/ProductContext';
-import { useUser } from "../../context/UserContext"
-
+import { useUser } from "../../context/UserContext";
 
 const { Search } = Input;
-// const onSearch = (value, _e, info) => console.log("info?.source", info?.source, "value", value);
-
-
-
-
 
 const Header = () => {
     const [showSearch, setShowSearch] = useState(false);
-    const [searchValue, setSearchValue] = useState("")
+    const [searchValue, setSearchValue] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
+    const [searchParams] = useSearchParams();
     const { setSelectedNav } = useProducts();
-    const { user, logout } = useUser()
-    console.log("user", user)
+    const { user, logout } = useUser();
+
+
+    useEffect(() => {
+        const query = searchParams.get('q');
+        if (query) {
+            setSearchValue(query);
+            if (location.pathname === '/search') {
+                setShowSearch(true);
+            }
+        } else {
+            setSearchValue("");
+        }
+    }, [searchParams, location.pathname]);
 
     const items = [
         {
@@ -29,13 +37,11 @@ const Header = () => {
             label: 'My Account',
             disabled: true,
             icon: <UserOutlined />,
-            // onClick: () => navigate('/account'),
         },
         {
             key: '2',
             label: 'Cart',
             icon: <ShoppingCartOutlined />,
-            // onClick: () => navigate('/cart'),
         },
         {
             type: 'divider',
@@ -53,23 +59,24 @@ const Header = () => {
 
     const toggleSearch = () => {
         setShowSearch(!showSearch);
+        if (showSearch && !searchParams.get('q')) {
+            setSearchValue("");
+        }
     };
 
     const showSearchContent = (e) => {
-        setSearchValue(e.target.value)
-    }
+        setSearchValue(e.target.value);
+    };
 
     const handleSearch = (value) => {
         if (value.trim()) {
             setSelectedNav(null);
             navigate(`/search?q=${encodeURIComponent(value)}`);
-            setShowSearch(false);
         } else {
+            // If empty, go to home but keep search input open
             navigate('/');
         }
-        setShowSearch(false)
-    }
-
+    };
 
     return (
         <ConfigProvider
@@ -120,15 +127,18 @@ const Header = () => {
                                 </Tooltip>
                             )}
                             {user ? 
-                        <Dropdown menu={{ items }} placement="bottomRight">
-                        <div className="user-account">
-                            <UserOutlined className="user-icon" />
-                            <div className="user-info">
-                                <span className="user-greeting">Hi, {user.name}</span>
-                                <span className="user-account-text">Account</span>
-                            </div>
-                        </div>
-                    </Dropdown>: <UserOutlined className="account-icon" onClick={() => { navigate('/log-in'); }} />}
+                                <Dropdown menu={{ items }} placement="bottomRight">
+                                    <div className="user-account">
+                                        <UserOutlined className="user-icon" />
+                                        <div className="user-info">
+                                            <span className="user-greeting">Hi, {user.name}</span>
+                                            <span className="user-account-text">Account</span>
+                                        </div>
+                                    </div>
+                                </Dropdown> 
+                                : 
+                                <UserOutlined className="account-icon" onClick={() => { navigate('/login'); }} />
+                            }
                         </div>
                     </div>
                 </div>
@@ -139,4 +149,3 @@ const Header = () => {
 };
 
 export default Header;
-
