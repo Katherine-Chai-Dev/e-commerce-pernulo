@@ -120,7 +120,6 @@
     transform: translateY(-1px);
 }
 
-/* Card hover effect */
 .contact-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -130,7 +129,6 @@
     box-shadow: 0 25px 70px rgba(0, 0, 0, 0.15);
 }
 
-/* Responsive adjustments */
 @media (max-width: 480px) {
     .contact-container {
         padding: 30px 16px;

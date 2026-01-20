@@ -22,3 +22,25 @@
 }
  */
 
+ .search-results-content {
+    min-height: calc(100vh - 200px);
+    padding: 40px 20px;
+    background-color: #f5f5f5;
+}
+
+.search-products-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.search-list-name {
+    font-size: 32px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 30px;
+    text-align: center;
+    width: 100%;
+}
+
+/* Rest of the CSS stays the same */

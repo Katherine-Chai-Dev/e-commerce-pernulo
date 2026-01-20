@@ -5,7 +5,6 @@ from typing import Optional, List
 from datetime import datetime
 
 class Product(SQLModel, table=True):
- 
     __tablename__ = 'products'
    
     id: Optional[int] = Field(default=None, primary_key=True)
