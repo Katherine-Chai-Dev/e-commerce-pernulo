@@ -19,14 +19,14 @@ const Contact = () => {
                         Have a question or want to work together? We'd love to hear from you.
                     </Text>
                     <div className="contact-email-wrapper">
-                        <span className="contact-email">qianying.chai.dev@gmail.com</span>
+                        <span className="contact-email">pernulo.pearl.jewelry@gmail.com</span>
                     </div>
                     <Button 
                         type="primary" 
                         size="large" 
                         icon={<SendOutlined />}
                         className="contact-button"
-                        href="mailto:qianying.chai.dev@gmail.com"
+                        href="mailto:pernulo.pearl.jewelry@gmail.com"
                     >
                         Send an Email
                     </Button>

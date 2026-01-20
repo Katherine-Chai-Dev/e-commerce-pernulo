@@ -1,27 +1,30 @@
-import './LogIn.css';
+
 import React, { useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import "../LogIn/LogIn.css";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-const LogIn = () => {
+const Register = () => {
     const { login } = useUser();
     const navigate = useNavigate();
 
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 
     const validateEmail = (email) => {
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(email) && email.length <= 254;
     };
-
     const validatePassword = (password) => {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d\W]).{8,100}$/;
         return passwordRegex.test(password);
@@ -37,6 +40,21 @@ const LogIn = () => {
             </ul>
         </div>
     );
+
+    const handleNameChange = (e) => {
+        const value = e.target.value;
+        setName(value);
+        if (errors.general) {
+            setErrors(prev => ({ ...prev, general: '' }));
+        }
+        if (touched.name) {
+            if (!value.trim()) {
+                setErrors(prev => ({ ...prev, name: 'Name is required' }));
+            } else {
+                setErrors(prev => ({ ...prev, name: '' }));
+            }
+        }
+    };
 
     const handleEmailChange = (e) => {
         const value = e.target.value;
@@ -61,7 +79,6 @@ const LogIn = () => {
         if (errors.general) {
             setErrors(prev => ({ ...prev, general: '' }));
         }
-
         if (touched.password) {
             if (!value) {
                 setErrors(prev => ({ ...prev, password: 'required' }));
@@ -71,10 +88,42 @@ const LogIn = () => {
                 setErrors(prev => ({ ...prev, password: '' }));
             }
         }
+        if (touched.confirmPassword && confirmPassword) {
+            if (value !== confirmPassword) {
+                setErrors(prev => ({ ...prev, confirmPassword: 'Passwords do not match' }));
+            } else {
+                setErrors(prev => ({ ...prev, confirmPassword: '' }));
+            }
+        }
+    };
+
+    const handleConfirmPasswordChange = (e) => {
+        const value = e.target.value;
+        setConfirmPassword(value);
+        if (errors.general) {
+            setErrors(prev => ({ ...prev, general: '' }));
+        }
+        if (touched.confirmPassword) {
+            if (!value) {
+                setErrors(prev => ({ ...prev, confirmPassword: 'Please confirm your password' }));
+            } else if (value !== password) {
+                setErrors(prev => ({ ...prev, confirmPassword: 'Passwords do not match' }));
+            } else {
+                setErrors(prev => ({ ...prev, confirmPassword: '' }));
+            }
+        }
     };
 
     const handleBlur = (field) => {
         setTouched(prev => ({ ...prev, [field]: true }));
+
+        if (field === 'name') {
+            if (!name.trim()) {
+                setErrors(prev => ({ ...prev, name: 'Name is required' }));
+            } else {
+                setErrors(prev => ({ ...prev, name: '' }));
+            }
+        }
 
         if (field === 'email') {
             if (!email) {
@@ -95,12 +144,26 @@ const LogIn = () => {
                 setErrors(prev => ({ ...prev, password: '' }));
             }
         }
+
+        if (field === 'confirmPassword') {
+            if (!confirmPassword) {
+                setErrors(prev => ({ ...prev, confirmPassword: 'Please confirm your password' }));
+            } else if (confirmPassword !== password) {
+                setErrors(prev => ({ ...prev, confirmPassword: 'Passwords do not match' }));
+            } else {
+                setErrors(prev => ({ ...prev, confirmPassword: '' }));
+            }
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const newErrors = {};
+
+        if (!name.trim()) {
+            newErrors.name = 'Name is required';
+        }
 
         if (!email) {
             newErrors.email = 'Email is required';
@@ -114,8 +177,14 @@ const LogIn = () => {
             newErrors.password = 'invalid';
         }
 
+        if (!confirmPassword) {
+            newErrors.confirmPassword = 'Please confirm your password';
+        } else if (confirmPassword !== password) {
+            newErrors.confirmPassword = 'Passwords do not match';
+        }
+
         setErrors(newErrors);
-        setTouched({ email: true, password: true });
+        setTouched({ name: true, email: true, password: true, confirmPassword: true });
 
         if (Object.keys(newErrors).length > 0) {
             return;
@@ -124,25 +193,16 @@ const LogIn = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch("http://localhost:8000/api/login", {
+            const response = await fetch("http://localhost:8000/api/register", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password, name: name.trim() })
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                if (data.code === 'USER_NOT_FOUND') {
-                    setErrors({
-                        general: data.error,
-                        showRegisterLink: true
-                    });
-                } else if (data.code === 'USE_GOOGLE') {
-                    setErrors({ general: data.error });
-                } else {
-                    setErrors({ general: data.error || 'Login failed' });
-                }
+                setErrors({ general: data.error || 'Registration failed' });
                 return;
             }
 
@@ -156,68 +216,31 @@ const LogIn = () => {
         }
     };
 
-    const googleLogin = useGoogleLogin({
-        onSuccess: async (tokenResponse) => {
-            setIsLoading(true);
-            try {
-                const response = await fetch('http://localhost:8000/api/auth/google', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ access_token: tokenResponse.access_token })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    setErrors({ general: data.error || 'Google login failed' });
-                    return;
-                }
-
-                login(data);
-                navigate('/');
-            } catch (error) {
-                setErrors({ general: 'Something went wrong. Please try again.' });
-            } finally {
-                setIsLoading(false);
-            }
-        },
-        onError: () => setErrors({ general: 'Google login failed' }),
-    });
-
     return (
         <div className="login-wrapper">
             <div className="login-container">
                 <form className="login-form" onSubmit={handleSubmit} noValidate>
-                    <h3 className="login-title">Sign In</h3>
-                    <p className="login-subtitle">Enter your email and password</p>
+                    <h3 className="login-title">Create Account</h3>
+                    <p className="login-subtitle">Enter your details to get started</p>
+
                     {errors.general && (
                         <div className="error-banner">
                             {errors.general}
-                            {errors.showRegisterLink && (
-                                <div style={{ marginTop: '8px' }}>
-                                    <Link to="/register" className="register-link">
-                                        Create an Account
-                                    </Link>
-                                </div>
-                            )}
                         </div>
                     )}
 
-                    <button
-                        type="button"
-                        className="google-btn"
-                        onClick={() => googleLogin()}
+                    <label htmlFor="name">Name*</label>
+                    <input
+                        id="name"
+                        type="text"
+                        placeholder="Your name"
+                        value={name}
+                        onChange={handleNameChange}
+                        onBlur={() => handleBlur('name')}
+                        className={errors.name ? 'input-error' : ''}
                         disabled={isLoading}
-                    >
-                        <img src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png" alt="Google" />
-                        Sign in with Google
-                    </button>
-
-                    <div className="divider">
-                        <hr />
-                        <span>or</span>
-                        <hr />
-                    </div>
+                    />
+                    {errors.name && <span className="error-message">{errors.name}</span>}
 
                     <label htmlFor="email">Email*</label>
                     <input
@@ -232,13 +255,12 @@ const LogIn = () => {
                     />
                     {errors.email && <span className="error-message">{errors.email}</span>}
 
-
                     <label htmlFor="password">Password*</label>
                     <div className="password-input-wrapper">
                         <input
                             id="password"
                             type={showPassword ? 'text' : 'password'}
-                            placeholder="Enter a password"
+                            placeholder="Create a password"
                             value={password}
                             onChange={handlePasswordChange}
                             onBlur={() => handleBlur('password')}
@@ -256,20 +278,34 @@ const LogIn = () => {
                     </div>
                     {errors.password && passwordErrorMessage}
 
-                    <div className="form-options">
-                        <label className="checkbox-label">
-                            <input type="checkbox" defaultChecked />
-                            <span>Keep me logged in</span>
-                        </label>
-                        <Link to="/forgot-password" className="forgot-link">Forgot password?</Link>
+                    <label htmlFor="confirmPassword">Confirm Password*</label>
+                    <div className="password-input-wrapper">
+                        <input
+                            id="confirmPassword"
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            placeholder="Confirm your password"
+                            value={confirmPassword}
+                            onChange={handleConfirmPasswordChange}
+                            onBlur={() => handleBlur('confirmPassword')}
+                            className={errors.confirmPassword ? 'input-error' : ''}
+                            disabled={isLoading}
+                        />
+                        <button
+                            type="button"
+                            className="password-toggle"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        >
+                            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
                     </div>
+                    {errors.confirmPassword && <span className="error-message">{errors.confirmPassword}</span>}
 
                     <button type="submit" className="submit-btn" disabled={isLoading}>
-                        {isLoading ? 'Signing in...' : 'Sign In'}
+                        {isLoading ? 'Creating Account...' : 'Create Account'}
                     </button>
 
                     <p className="signup-text">
-                        Not registered yet? <Link to="/register">Create an Account</Link>
+                        Already have an account? <Link to="/login" >Sign In</Link>
                     </p>
                 </form>
             </div>
@@ -277,4 +313,4 @@ const LogIn = () => {
     );
 };
 
-export default LogIn;
+export default Register;

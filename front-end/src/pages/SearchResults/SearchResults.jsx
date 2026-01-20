@@ -40,30 +40,27 @@ const SearchResults = () => {
         return variations.some(term => name.includes(term));
     });
 
-if (!filteredProducts || filteredProducts.length === 0) {
-    return (
-        <div className="result-wrapper">
-        <Result
-            status="404"
-            title="No products found"
-            subTitle={`Sorry, we couldn't find any products matching "${query}"`}
-            extra={
-                <Button type="primary" onClick={() => navigate('/')}>
-                    Back to Home Page
-                </Button>
-            }
-        />
-        </div>
-    );
-}
-
-
-
+    if (!filteredProducts || filteredProducts.length === 0) {
+        return (
+            <div className="result-wrapper">
+                <Result
+                    status="404"
+                    title="No products found"
+                    subTitle={`Sorry, we couldn't find any products matching "${query}"`}
+                    extra={
+                        <Button type="primary" onClick={() => navigate('/')}>
+                            Back to Home Page
+                        </Button>
+                    }
+                />
+            </div>
+        );
+    }
 
     return (
-        <Layout.Content className='content'>
-            <div className="products-section">
-                <Space className='list-name' >Search Results</Space>
+        <Layout.Content className='search-results-content'>
+            <div className="search-products-section">
+                <Space className='list-name'>Search Results</Space>
                 <Row gutter={[20, 30]}>
                     {filteredProducts?.map((product) => (
                         <Col
@@ -81,7 +78,6 @@ if (!filteredProducts || filteredProducts.length === 0) {
                 </Row>
             </div>
         </Layout.Content>
-
     );
 };
 

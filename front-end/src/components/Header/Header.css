@@ -58,7 +58,7 @@
   gap: 12px;
 }
 
-/* Search Styles */
+
 .account-icon,
 .search-icon {
   color: #fff;
@@ -120,7 +120,7 @@
   display: none;
 }
 
-/* User Account Styles (when logged in) */
+
 .user-account {
   display: flex;
   align-items: center;
@@ -163,7 +163,6 @@
   color: white;
 }
 
-/* Media Queries*/
 @media screen and (max-width: 1700px) {
   .nav-logo {
     left: 40px;
@@ -172,10 +171,10 @@
 
 @media screen and (max-width: 1500px) {
   .nav-logo {
-    left: 30px;
+    left: 10px;
   }
   .header-right {
-    right: 45px;
+    right: 15px;
   }
 }
 
@@ -218,7 +217,8 @@
   .search-button {
     width: 200px;
   }
-  /* Hide user name on tablet */
+
+  
   .user-info {
     display: none;
   }
