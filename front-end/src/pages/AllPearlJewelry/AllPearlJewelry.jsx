@@ -1,7 +1,7 @@
 import { Layout, Space, Flex, ConfigProvider, Col, Row } from 'antd';
 import Slider from "../../components/Slider/Slider"
 import CardComponent from "../../components/Card/CardComponent"
-import { useProducts } from "../../context/Context";
+import { useProducts } from "../../context/ProductContext";
 
 const AllPearlJewelry = () => {
     const { products } = useProducts();

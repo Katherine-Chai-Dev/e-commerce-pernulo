@@ -1,6 +1,6 @@
 import { Layout, Space, ConfigProvider, Col, Row } from 'antd';
-import { useProducts } from '../../context/Context';
 import CardComponent from '../../components/Card/CardComponent';
+import { useProducts } from "../../context/ProductContext";
 const Earrings = () => {
     const { products, loading } = useProducts();
 

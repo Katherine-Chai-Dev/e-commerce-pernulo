@@ -1,6 +1,6 @@
 import { Layout, Space, Flex, ConfigProvider, Col, Row } from 'antd';
-import { useProducts } from '../../context/Context';
 import CardComponent from '../../components/Card/CardComponent';
+import { useProducts } from "../../context/ProductContext";
 const Broochs = () => {
     const { products, loading } = useProducts();
 

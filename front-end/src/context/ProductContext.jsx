@@ -5,8 +5,8 @@ const ProductContext = createContext();
 export function ProductProvider({ children }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-
-
+    const [selectedNav, setSelectedNav] = useState(null);
+    
     const getProducts = async () => {
         try {
             const response = await fetch("http://localhost:8000/api/products")
@@ -25,9 +25,8 @@ export function ProductProvider({ children }) {
         getProducts()
     }, [])
 
-
     return (
-        <ProductContext.Provider value={{ products, setProducts, loading }}>
+        <ProductContext.Provider value={{ products, setProducts, loading, selectedNav, setSelectedNav }}>
             {children}
         </ProductContext.Provider>
     );
