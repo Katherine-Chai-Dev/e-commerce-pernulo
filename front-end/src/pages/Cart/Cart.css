@@ -54,7 +54,6 @@
     color: #666;
 }
 
-/* Empty Cart */
 .empty-cart-card {
     padding: 80px 20px;
     text-align: center;
@@ -63,14 +62,14 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
-/* Cart Layout */
+
 .cart-layout {
     display: grid;
     grid-template-columns: 1fr 420px;
     gap: 32px;
 }
 
-/* Cart Items Section */
+
 .cart-items-section {
     display: flex;
     flex-direction: column;
@@ -121,7 +120,7 @@
     transform: scale(1.08);
 }
 
-/* Item Content Wrapper */
+
 .item-content {
     display: flex;
     flex-direction: column;
@@ -129,7 +128,7 @@
     padding: 8px 0;
 }
 
-/* Item Details */
+
 .item-details {
     display: flex;
     flex-direction: column;
@@ -192,7 +191,7 @@
     box-shadow: 0 2px 6px rgba(255, 77, 79, 0.3);
 }
 
-/* Item Actions - Bottom right like Walmart */
+
 .item-actions {
     display: flex;
     flex-direction: row;
@@ -203,7 +202,7 @@
     border-top: 2px solid #f5f5f5;
 }
 
-/* Custom Quantity Control - Walmart style */
+
 .quantity-control {
     display: flex;
     align-items: center;
@@ -268,7 +267,7 @@
     padding: 0 8px;
 }
 
-/* Remove Button - Walmart text style */
+
 .remove-btn {
     height: auto !important;
     padding: 0 !important;
@@ -296,7 +295,6 @@
     display: none;
 }
 
-/* Cart Summary Section */
 .cart-summary-section {
     position: sticky;
     top: 20px;
@@ -337,8 +335,37 @@
     color: #1a1a1a;
 }
 
+
+.original-total {
+    text-decoration: line-through;
+    color: #888;
+}
+
+
+.savings-row {
+    color: #52c41a;
+}
+
+.savings-amount {
+    color: #3c8f13 !important;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background-color: rgba(82, 196, 26, 0.05);
+    background-color: #d7eacd;
+}
+
+
+.after-savings-row {
+    justify-content: flex-end;
+}
+
+.after-savings-amount {
+    color: #52c41a;
+    font-weight: 600;
+}
+
 .free-shipping {
-    color: #52c41a !important;
     font-weight: 800 !important;
     font-size: 16px !important;
 }
@@ -394,7 +421,6 @@
     font-weight: 500;
 }
 
-/* Responsive Design */
 @media (max-width: 1200px) {
     .cart-layout {
         grid-template-columns: 1fr 380px;
@@ -484,3 +510,4 @@
         width: 100% !important;
     }
 }
+

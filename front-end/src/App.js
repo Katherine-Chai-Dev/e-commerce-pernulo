@@ -63,7 +63,7 @@ import PeoductDetail from "../src/pages/ProductDetail/ProductDetail"
 import { ProductProvider } from './context/ProductContext';
 import { UserProvider } from './context/UserContext';
 import SearchResults from "./pages/SearchResults/SearchResults"
-import Login from "./pages/Login/Login";
+import Login from "./pages/Login/Login"
 import Cart from './pages/Cart/Cart';
 import { CartProvider } from './context/CartContext';
 // import Register from './pages/Register/Register';

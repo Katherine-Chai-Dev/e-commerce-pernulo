@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Cart.css';
 import { Layout, Card, Button, Empty, Divider } from 'antd';
 import { DeleteOutlined, ShoppingOutlined, ArrowLeftOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
+import { useUser } from '../../context/UserContext';
 
 const Cart = () => {
     const navigate = useNavigate();
-    const { cartItems, removeFromCart, updateQuantity} = useCart(); 
+    const { cartItems, removeFromCart, updateQuantity } = useCart();
+    const { user } = useUser();
 
     const incrementQuantity = (productId, currentQuantity) => {
         updateQuantity(productId, currentQuantity + 1);
@@ -19,7 +21,18 @@ const Cart = () => {
         }
     };
 
+    const getTotalItemCount = () => {
+        return cartItems.reduce((total, item) => total + item.quantity, 0);
+    };
 
+
+    const calculateOriginalTotal = () => {
+        return cartItems.reduce((total, item) => {
+            return total + (parseFloat(item.original_price) * item.quantity);
+        }, 0);
+    };
+
+  
     const calculateSubtotal = () => {
         return cartItems.reduce((total, item) => {
             const price = item.discounted_price || item.original_price;
@@ -27,35 +40,31 @@ const Cart = () => {
         }, 0);
     };
 
-    const calculateTax = (subtotal) => {
-        return subtotal * 0.0925;
-    };
-
-    const calculateTotal = () => {
-        const subtotal = calculateSubtotal();
-        const tax = calculateTax(subtotal);
-        return subtotal + tax;
-    };
-
-
-  
-
-    const handleCheckout = () => {
-        console.log('Proceeding to checkout with items:', cartItems);
-        navigate('/checkout');
+    
+    const calculateSavings = () => {
+        return cartItems.reduce((total, item) => {
+            if (item.discount > 0 && item.discounted_price) {
+                const saved = (parseFloat(item.original_price) - parseFloat(item.discounted_price)) * item.quantity;
+                return total + saved;
+            }
+            return total;
+        }, 0);
     };
 
     const handleContinueShopping = () => {
         navigate('/shop/all-pearl-jewelry');
     };
 
+    const savings = calculateSavings();
+    const hasSavings = savings > 0;
+
     return (
         <Layout.Content className="cart-content">
             <div className="cart-container">
                 <div className="cart-header">
                     <h1>Shopping Cart</h1>
-                    <Button 
-                        icon={<ArrowLeftOutlined />} 
+                    <Button
+                        icon={<ArrowLeftOutlined />}
                         onClick={handleContinueShopping}
                         className="continue-shopping-btn"
                     >
@@ -69,8 +78,8 @@ const Cart = () => {
                             image={Empty.PRESENTED_IMAGE_SIMPLE}
                             description="Your cart is empty"
                         >
-                            <Button 
-                                type="primary" 
+                            <Button
+                                type="primary"
                                 icon={<ShoppingOutlined />}
                                 onClick={handleContinueShopping}
                             >
@@ -95,13 +104,13 @@ const Cart = () => {
 
                                         <div className="item-content">
                                             <div className="item-details">
-                                                <h3 
+                                                <h3
                                                     className="item-name"
                                                     onClick={() => navigate(`/product-detail/${item.id}`)}
                                                 >
                                                     {item.product_name}
                                                 </h3>
-                                                
+
                                                 {item.gemstone && (
                                                     <p className="item-attribute">
                                                         <span>Gemstone:</span> {item.gemstone}
@@ -169,37 +178,53 @@ const Cart = () => {
                             <Card className="summary-card">
                                 <h2>Order Summary</h2>
                                 <Divider />
-                                
+
                                 <div className="summary-row">
-                                    <span>Subtotal ({cartItems.length} item{cartItems.length > 1 ? 's' : ''}):</span>
-                                    <span>${calculateSubtotal().toFixed(2)}</span>
+                                    <span>Subtotal ({getTotalItemCount()} item{getTotalItemCount() > 1 ? 's' : ''}):</span>
+                                    {hasSavings ? (
+                                        <span className="original-total">${calculateOriginalTotal().toFixed(2)}</span>
+                                    ) : (
+                                        <span>${calculateSubtotal().toFixed(2)}</span>
+                                    )}
                                 </div>
-                                
-                                <div className="summary-row">
-                                    <span>Tax (9.25%):</span>
-                                    <span>${calculateTax(calculateSubtotal()).toFixed(2)}</span>
-                                </div>
-                                
+
+                                {hasSavings && (
+                                    <>
+                                        <div className="summary-row savings-row">
+                                            <span>Savings:</span>
+                                            <span className="savings-amount">-${savings.toFixed(2)}</span>
+                                        </div>
+                                        <div className="summary-row after-savings-row">
+                                            <span></span>
+                                            <span className="after-savings-amount">${calculateSubtotal().toFixed(2)}</span>
+                                        </div>
+                                    </>
+                                )}
+
                                 <div className="summary-row">
                                     <span>Shipping:</span>
                                     <span className="free-shipping">FREE</span>
                                 </div>
-                                
+
+                                <div className="summary-row">
+                                    <span>Tax:</span>
+                                    <span>Calculated at checkout</span>
+                                </div>
+
                                 <Divider />
-                                
+
                                 <div className="summary-row total-row">
-                                    <span>Total:</span>
-                                    <span className="total-amount">${calculateTotal().toFixed(2)}</span>
+                                    <span>Estimated Total:</span>
+                                    <span className="total-amount">${calculateSubtotal().toFixed(2)}</span>
                                 </div>
 
                                 <Button
                                     type="primary"
                                     size="large"
                                     block
-                                    onClick={handleCheckout}
                                     className="checkout-btn"
                                 >
-                                    Proceed to Checkout
+                                    {user ? 'Proceed to Checkout' : 'Sign in to Checkout'}
                                 </Button>
 
                                 <div className="security-badges">
