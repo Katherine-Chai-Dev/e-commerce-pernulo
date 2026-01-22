@@ -54,8 +54,7 @@ const Header = () => {
             label: 'Sign Out',
             icon: <LogoutOutlined />,
             onClick: () => {
-                logout();
-                navigate('/');
+                logout(() => navigate('/'));
             },
         },
     ];

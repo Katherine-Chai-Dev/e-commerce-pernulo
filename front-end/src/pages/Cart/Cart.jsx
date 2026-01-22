@@ -7,9 +7,11 @@ import { useCart } from '../../context/CartContext';
 import { useUser } from '../../context/UserContext';
 
 const Cart = () => {
+    const { user,loggingOut } = useUser();
     const navigate = useNavigate();
     const { cartItems, removeFromCart, updateQuantity } = useCart();
-    const { user } = useUser();
+
+
 
     const incrementQuantity = (productId, currentQuantity) => {
         updateQuantity(productId, currentQuantity + 1);
@@ -57,6 +59,10 @@ const Cart = () => {
 
     const savings = calculateSavings();
     const hasSavings = savings > 0;
+
+    if (loggingOut) {
+        return null; 
+    }
 
     return (
         <Layout.Content className="cart-content">
