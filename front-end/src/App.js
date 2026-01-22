@@ -63,7 +63,7 @@ import PeoductDetail from "../src/pages/ProductDetail/ProductDetail"
 import { ProductProvider } from './context/ProductContext';
 import { UserProvider } from './context/UserContext';
 import SearchResults from "./pages/SearchResults/SearchResults"
-// import LogIn from './pages/LogIn/LogIn';
+import Login from "./pages/Login/Login";
 // import Register from './pages/Register/Register';
 // import ForgotPassword from './pages/LogIn/ForgotPassword';
 // import ResetPassword from './pages/LogIn/ResetPassword';
@@ -87,10 +87,10 @@ const App = () => (
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/search" element={<SearchResults />} />
-                {/* <Route path="/login" element={<LogIn />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/reset-password" element={<ResetPassword />} /> */}
+                 <Route path="/login" element={<Login />} />
+                 {/* <Route path="/register" element={<Register />} /> */}
+                 {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
+                 {/* <Route path="/reset-password" element={<ResetPassword />} />  */}
               </Routes>
             </div>
             <Footer />
