@@ -64,6 +64,8 @@ import { ProductProvider } from './context/ProductContext';
 import { UserProvider } from './context/UserContext';
 import SearchResults from "./pages/SearchResults/SearchResults"
 import Login from "./pages/Login/Login";
+import Cart from './pages/Cart/Cart';
+import { CartProvider } from './context/CartContext';
 // import Register from './pages/Register/Register';
 // import ForgotPassword from './pages/LogIn/ForgotPassword';
 // import ResetPassword from './pages/LogIn/ResetPassword';
@@ -72,6 +74,8 @@ const App = () => (
   <BrowserRouter>
     <ProductProvider>
       <UserProvider>
+      <CartProvider>
+
         <Flex gap="middle" wrap>
           <Layout className="layout-container">
             <Header />
@@ -91,13 +95,16 @@ const App = () => (
                  {/* <Route path="/register" element={<Register />} /> */}
                  {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
                  {/* <Route path="/reset-password" element={<ResetPassword />} />  */}
+                 <Route path="/cart" element={<Cart />} />
               </Routes>
             </div>
             <Footer />
           </Layout>
         </Flex>
+        </CartProvider>
       </UserProvider>
     </ProductProvider>
+   
   </BrowserRouter>
 );
 
