@@ -49,6 +49,8 @@ import './App.css';
 import React from 'react';
 import { Flex, Layout } from 'antd';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ProductProvider } from './context/ProductContext';
+import { UserProvider } from './context/UserContext';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Home from "./pages/Home/Home";
@@ -60,12 +62,13 @@ import Bracelets from './pages/Bracelets/Bracelets';
 import Broochs from "./pages/Broochs/Broochs"
 import AllPearlJewelry from './pages/AllPearlJewelry/AllPearlJewelry';
 import PeoductDetail from "../src/pages/ProductDetail/ProductDetail"
-import { ProductProvider } from './context/ProductContext';
-import { UserProvider } from './context/UserContext';
 import SearchResults from "./pages/SearchResults/SearchResults"
 import Login from "./pages/Login/Login"
 import Cart from './pages/Cart/Cart';
+import BuyNow from './pages/BuyNow/BuyNow';
+
 import { CartProvider } from './context/CartContext';
+
 // import Register from './pages/Register/Register';
 // import ForgotPassword from './pages/LogIn/ForgotPassword';
 // import ResetPassword from './pages/LogIn/ResetPassword';
@@ -96,6 +99,8 @@ const App = () => (
                  {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
                  {/* <Route path="/reset-password" element={<ResetPassword />} />  */}
                  <Route path="/cart" element={<Cart />} />
+                 <Route path="/buy-now" element={<BuyNow />} />
+
               </Routes>
             </div>
             <Footer />
