@@ -274,7 +274,6 @@ def serve_image(folder, filename):
 
 
 # Product Routes
-
 @app.route("/api/products", methods=["GET"])
 def get_products():
     with Session(engine) as session:
@@ -441,9 +440,6 @@ def delete_product(product_id):
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
 
-
-# Auth Routes
-
 @app.route("/api/register", methods=["POST"])
 def register():
     try:
@@ -454,7 +450,17 @@ def register():
     with Session(engine) as session:
         existing = session.exec(select(User).where(User.email == data.email)).first()
         if existing:
-            return jsonify({"error": "Email already registered"}), 400
+            # Check if registered with Google
+            if existing.auth_provider == "google":
+                return jsonify({
+                    "error": "This email is already registered with Google.",
+                    "code": "EMAIL_EXISTS_GOOGLE"
+                }), 400
+            else:
+                return jsonify({
+                    "error": "This email is already registered.",
+                    "code": "EMAIL_EXISTS"
+                }), 400
 
         user = User(email=data.email, name=data.name, auth_provider="local")
         user.set_password(data.password)
@@ -463,7 +469,6 @@ def register():
         session.refresh(user)
 
         return jsonify(UserResponse.model_validate(user).model_dump()), 201
-
 
 @app.route("/api/login", methods=["POST"])
 def login():

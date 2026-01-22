@@ -1,12 +1,13 @@
+
 import './Login.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const LogIn = () => {
-    const { login } = useUser();
+    const { login, user } = useUser();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
@@ -16,33 +17,22 @@ const LogIn = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+    }, [user, navigate]);
 
     const validateEmail = (email) => {
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(email) && email.length <= 254;
     };
 
-    const validatePassword = (password) => {
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d\W]).{8,100}$/;
-        return passwordRegex.test(password);
-    };
-
-    const passwordErrorMessage = (
-        <div className="password-requirements">
-            <p>Your password must include the following:</p>
-            <ul>
-                <li>8–100 characters</li>
-                <li>Upper & lowercase letters</li>
-                <li>At least one number or special character</li>
-            </ul>
-        </div>
-    );
-
     const handleEmailChange = (e) => {
         const value = e.target.value;
         setEmail(value);
         if (errors.general) {
-            setErrors(prev => ({ ...prev, general: '' }));
+            setErrors(prev => ({ ...prev, general: '', showRegisterLink: false }));
         }
         if (touched.email) {
             if (!value) {
@@ -59,14 +49,12 @@ const LogIn = () => {
         const value = e.target.value;
         setPassword(value);
         if (errors.general) {
-            setErrors(prev => ({ ...prev, general: '' }));
+            setErrors(prev => ({ ...prev, general: '', showRegisterLink: false }));
         }
 
-        if (touched.password) {
+        if (touched.password || errors.password) {
             if (!value) {
-                setErrors(prev => ({ ...prev, password: 'required' }));
-            } else if (!validatePassword(value)) {
-                setErrors(prev => ({ ...prev, password: 'invalid' }));
+                setErrors(prev => ({ ...prev, password: 'Password is required' }));
             } else {
                 setErrors(prev => ({ ...prev, password: '' }));
             }
@@ -88,9 +76,7 @@ const LogIn = () => {
 
         if (field === 'password') {
             if (!password) {
-                setErrors(prev => ({ ...prev, password: 'required' }));
-            } else if (!validatePassword(password)) {
-                setErrors(prev => ({ ...prev, password: 'invalid' }));
+                setErrors(prev => ({ ...prev, password: 'Password is required' }));
             } else {
                 setErrors(prev => ({ ...prev, password: '' }));
             }
@@ -109,9 +95,7 @@ const LogIn = () => {
         }
 
         if (!password) {
-            newErrors.password = 'required';
-        } else if (!validatePassword(password)) {
-            newErrors.password = 'invalid';
+            newErrors.password = 'Password is required';
         }
 
         setErrors(newErrors);
@@ -139,26 +123,31 @@ const LogIn = () => {
                         showRegisterLink: true
                     });
                 } else if (data.code === 'USE_GOOGLE') {
-                    setErrors({ general: data.error });
+                    setErrors({
+                        password: 'This account uses Google sign-in. Please use the Google button above.'
+                    });
+                } else if (data.code === 'WRONG_PASSWORD') {
+                    setErrors({
+                        password: 'Please enter a valid password'
+                    });
                 } else {
                     setErrors({ general: data.error || 'Login failed' });
                 }
+                setIsLoading(false);
                 return;
             }
 
             login(data);
-            navigate('/');
+         
 
         } catch (error) {
             setErrors({ general: 'Something went wrong. Please try again.' });
-        } finally {
             setIsLoading(false);
         }
     };
 
     const googleLogin = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
-            setIsLoading(true);
             try {
                 const response = await fetch('http://localhost:8000/api/auth/google', {
                     method: 'POST',
@@ -170,19 +159,43 @@ const LogIn = () => {
 
                 if (!response.ok) {
                     setErrors({ general: data.error || 'Google login failed' });
+                    setIsLoading(false);
                     return;
                 }
 
                 login(data);
-                navigate('/');
+                
+
             } catch (error) {
                 setErrors({ general: 'Something went wrong. Please try again.' });
-            } finally {
                 setIsLoading(false);
             }
         },
-        onError: () => setErrors({ general: 'Google login failed' }),
+        onError: () => {
+            setErrors({ general: 'Google login failed' });
+            setIsLoading(false);
+        },
     });
+
+    const handleGoogleLogin = () => {
+        setIsLoading(true);
+        setErrors({});
+        googleLogin();
+    };
+
+   
+    if (user || isLoading) {
+        return (
+            <div className="login-wrapper">
+                <div className="login-container">
+                    <div className="login-form" style={{ textAlign: 'center', padding: '60px 40px' }}>
+                        <div className="loading-spinner"></div>
+                        <p style={{ marginTop: '20px', color: '#666' }}>Signing in...</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="login-wrapper">
@@ -190,6 +203,7 @@ const LogIn = () => {
                 <form className="login-form" onSubmit={handleSubmit} noValidate>
                     <h3 className="login-title">Sign In</h3>
                     <p className="login-subtitle">Enter your email and password</p>
+
                     {errors.general && (
                         <div className="error-banner">
                             {errors.general}
@@ -206,7 +220,7 @@ const LogIn = () => {
                     <button
                         type="button"
                         className="google-btn"
-                        onClick={() => googleLogin()}
+                        onClick={handleGoogleLogin}
                         disabled={isLoading}
                     >
                         <img src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png" alt="Google" />
@@ -232,19 +246,18 @@ const LogIn = () => {
                     />
                     {errors.email && <span className="error-message">{errors.email}</span>}
 
-
                     <label htmlFor="password">Password*</label>
                     <div className="password-input-wrapper">
                         <input
                             id="password"
                             type={showPassword ? 'text' : 'password'}
-                            placeholder="Enter a password"
+                            placeholder="Enter your password"
                             value={password}
                             onChange={handlePasswordChange}
                             onBlur={() => handleBlur('password')}
                             className={errors.password ? 'input-error' : ''}
                             disabled={isLoading}
-                            autoComplete="new-password"
+                            autoComplete="current-password"
                         />
                         <button
                             type="button"
@@ -254,7 +267,7 @@ const LogIn = () => {
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </div>
-                    {errors.password && passwordErrorMessage}
+                    {errors.password && <span className="error-message">{errors.password}</span>}
 
                     <div className="form-options">
                         <label className="checkbox-label">

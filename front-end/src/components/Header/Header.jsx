@@ -76,10 +76,14 @@ const Header = () => {
             setSelectedNav(null);
             navigate(`/search?q=${encodeURIComponent(value)}`);
         } else {
-            // If empty, go to home but keep search input open
             navigate('/');
         }
     };
+    const getFirstName = (fullName) => {
+        if (!fullName) return '';
+        return fullName.trim().split(' ')[0];
+    };
+    
 
     return (
         <ConfigProvider
@@ -134,7 +138,7 @@ const Header = () => {
                                     <div className="user-account">
                                         <UserOutlined className="user-icon" />
                                         <div className="user-info">
-                                            <span className="user-greeting">Hi, {user.name}</span>
+                                            <span className="user-greeting">Hi, {getFirstName(user.name)}</span>
                                             <span className="user-account-text">Account</span>
                                         </div>
                                     </div>
