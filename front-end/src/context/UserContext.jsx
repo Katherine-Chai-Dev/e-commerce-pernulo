@@ -2,14 +2,37 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const UserContext = createContext();
 
-export function UserProvider({children}){
-    const [user,setUser] = useState(null);
+export function UserProvider({ children }) {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [loggingOut, setLoggingOut] = useState(false);
 
     useEffect(() => {
-        const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-            setUser(JSON.parse(savedUser));
-        }
+        const validateUser = async () => {
+            const savedUser = localStorage.getItem('user');
+
+            if (savedUser) {
+                try {
+                    const userData = JSON.parse(savedUser);
+                    const response = await fetch(`/api/users/${userData.id}`);
+
+                    if (response.ok) {
+                        setUser(userData);
+                    } else {
+                        localStorage.removeItem('user');
+                        localStorage.removeItem(`cart_${userData.id}`);
+                        setUser(null);
+                    }
+                } catch (e) {
+                    localStorage.removeItem('user');
+                    setUser(null);
+                }
+            }
+
+            setLoading(false);
+        };
+
+        validateUser();
     }, []);
 
     const login = (userInfo) => {
@@ -17,16 +40,23 @@ export function UserProvider({children}){
         localStorage.setItem('user', JSON.stringify(userInfo));
     };
 
-    const logout = () => {
-        setUser(null);
-        localStorage.removeItem('user');
+    const logout = (callback) => {
+        setLoggingOut(true);
+
+        if (callback) callback();
+
+        setTimeout(() => {
+            setUser(null);
+            localStorage.removeItem('user');
+            setLoggingOut(false);
+        }, 100);
     };
 
     return (
-        <UserContext.Provider value={{ user, login, logout }}>
+        <UserContext.Provider value={{ user, loading, loggingOut, login, logout }}>
             {children}
         </UserContext.Provider>
-    )
+    );
 }
 
 export function useUser() {

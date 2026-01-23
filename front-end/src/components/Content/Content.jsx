@@ -1,11 +1,9 @@
-import { Layout, Space, Flex, ConfigProvider, Col, Row } from 'antd';
+import { Layout, Space,ConfigProvider, Col, Row } from 'antd';
 import "./Content.css"
 import CardComponent from "../Card/CardComponent"
 
 
 const Content = () => {
-
-
     return (
         <ConfigProvider
             theme={{
@@ -15,7 +13,6 @@ const Content = () => {
             }}
         >
             <Layout.Content className='content'>
-                {/* <Slider /> */}
                 <div className="products-section">
                     <Space className='list-name'>Popular Products</Space>
                     <Row gutter={[20, 30]}>

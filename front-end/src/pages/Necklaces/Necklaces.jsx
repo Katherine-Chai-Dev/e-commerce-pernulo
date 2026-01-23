@@ -1,7 +1,7 @@
 
 import { Layout, Space, Flex, ConfigProvider, Col, Row } from 'antd';
-import { useProducts } from '../../context/ProductContext';
 import CardComponent from '../../components/Card/CardComponent';
+import { useProducts } from "../../context/ProductContext";
 const Necklaces = () => {
     const { products, loading } = useProducts();
     console.log("products", products)

@@ -1,15 +1,16 @@
+
 .product-detail-container {
   display: flex !important;
-  flex-direction: row !important;  
+  flex-direction: row !important;
   flex-wrap: nowrap !important;
   padding: 50px 20px;
-  gap: 60px; 
+  gap: 60px;
   justify-content: center !important;
 }
 
 .gallery-container {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   gap: 16px;
   font-family: 'Cormorant Garamond', Georgia, serif;
   border-radius: 4px;
@@ -20,7 +21,7 @@
 
 .thumbnail-strip {
   display: flex;
-  flex-direction: row;  
+  flex-direction: row;
   gap: 10px;
   width: 100%;
   overflow-x: auto;
@@ -63,7 +64,7 @@
 
 .image-wrapper {
   position: relative;
-  width: 100%; 
+  width: 100%;
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 12px;
@@ -249,28 +250,102 @@
   color: #fff !important;
 }
 
+
+/* Login Modal Styles */
+.login-modal .ant-modal-content {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.login-modal-content {
+  text-align: center;
+  padding: 20px 10px;
+}
+
+.login-modal-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #009B9E 0%, #00c6c9 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-modal-icon .anticon {
+  font-size: 36px;
+  color: white;
+}
+
+.login-modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+}
+
+.login-modal-text {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.login-modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.login-modal-signin-btn {
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: #009B9E;
+  border-color: #009B9E;
+}
+
+.login-modal-signin-btn:hover {
+  background: #00b3b6 !important;
+  border-color: #00b3b6 !important;
+}
+
+.login-modal-cancel-btn {
+  height: 48px;
+  font-size: 16px;
+  border-radius: 8px;
+  color: #666;
+}
+
+.login-modal-cancel-btn:hover {
+  color: #009B9E !important;
+  border-color: #009B9E !important;
+}
+
 @media screen and (max-width: 1200px) {
   .product-detail-container {
     padding: 40px 20px;
     gap: 40px;
   }
-  
+
   .gallery-container {
     flex: 0 0 380px !important;
     width: 380px;
     max-width: 380px;
   }
-  
+
   .product-info-wrapper {
     flex: 0 0 500px !important;
     width: 500px;
     max-width: 500px;
   }
-  
+
   .thumbnail-strip {
     gap: 8px;
   }
-  
+
   .thumbnail-button {
     width: calc((100% - 32px) / 5);
     min-width: calc((100% - 32px) / 5);
@@ -282,23 +357,23 @@
     padding: 30px 16px;
     gap: 30px;
   }
-  
+
   .gallery-container {
     flex: 0 0 320px !important;
     width: 320px;
     max-width: 320px;
   }
-  
+
   .product-info-wrapper {
     flex: 0 0 420px !important;
     width: 420px;
     max-width: 420px;
   }
-  
+
   .thumbnail-strip {
     gap: 6px;
   }
-  
+
   .thumbnail-button {
     width: calc((100% - 24px) / 5);
     min-width: calc((100% - 24px) / 5);
@@ -310,23 +385,23 @@
     padding: 20px 16px;
     gap: 20px;
   }
-  
+
   .gallery-container {
     flex: 0 0 250px !important;
     width: 250px;
     max-width: 250px;
   }
-  
+
   .product-info-wrapper {
     flex: 0 0 320px !important;
     width: 320px;
     max-width: 320px;
   }
-  
+
   .thumbnail-strip {
     gap: 5px;
   }
-  
+
   .thumbnail-button {
     width: calc((100% - 20px) / 5);
     min-width: calc((100% - 20px) / 5);
@@ -340,7 +415,7 @@
     padding: 16px 10px;
     gap: 12px;
   }
-  
+
   .gallery-container {
     flex: 0 0 160px !important;
     width: 160px;
@@ -349,22 +424,22 @@
     gap: 8px;
     border-radius: 8px;
   }
-  
+
   .product-info-wrapper {
     flex: 0 0 200px !important;
     width: 200px;
     max-width: 200px;
     min-width: 160px;
   }
-  
+
   .image-wrapper {
     border-radius: 8px;
   }
-  
+
   .thumbnail-strip {
     gap: 4px;
   }
-  
+
   .thumbnail-button {
     width: calc((100% - 16px) / 5);
     min-width: calc((100% - 16px) / 5);
@@ -379,23 +454,23 @@
     align-items: center;
     gap: 16px;
   }
-  
+
   .gallery-container {
     flex: 0 0 auto !important;
     width: 100%;
     max-width: 100%;
     min-width: unset;
   }
-  
+
   .thumbnail-strip {
     gap: 4px;
   }
-  
+
   .thumbnail-button {
     width: calc((100% - 16px) / 5);
     min-width: calc((100% - 16px) / 5);
   }
-  
+
   .product-info-wrapper {
     flex: 0 0 auto !important;
     width: 100% !important;

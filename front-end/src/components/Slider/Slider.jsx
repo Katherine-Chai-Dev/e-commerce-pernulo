@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Slider.css";
 
 const Slider = () => {
-  const [currentSlide, setCurrentSlide] = useState(1); 
+  const [currentSlide, setCurrentSlide] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const intervalRef = useRef(null);
 
@@ -39,11 +39,11 @@ const Slider = () => {
     }
   ];
 
- 
+
   const extendedSlides = [
-    slideData[slideData.length - 1], 
-    ...slideData,                     
-    slideData[0]                      
+    slideData[slideData.length - 1],
+    ...slideData,
+    slideData[0]
   ];
 
 
@@ -66,7 +66,7 @@ const Slider = () => {
       setTimeout(() => {
         setIsTransitioning(false);
         setCurrentSlide(1);
-      }, 600); 
+      }, 600);
     } else if (currentSlide === 0) {
       setTimeout(() => {
         setIsTransitioning(false);
@@ -78,8 +78,8 @@ const Slider = () => {
 
   const handleDotClick = (index) => {
     setIsTransitioning(true);
-    setCurrentSlide(index + 1); 
-    
+    setCurrentSlide(index + 1);
+
 
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -100,16 +100,16 @@ const Slider = () => {
   return (
     <div>
       <div className="slider">
-        <div 
+        <div
           className="slides"
-          style={{ 
+          style={{
             transform: `translateX(-${currentSlide * 100}%)`,
             transition: isTransitioning ? 'transform 0.6s ease-in-out' : 'none'
           }}
         >
           {extendedSlides.map((slide, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="slide-wrapper"
             >
               <img src={slide.image} className="slide" alt={slide.title} />
@@ -121,11 +121,11 @@ const Slider = () => {
           ))}
         </div>
       </div>
-      
+
       <div className="indicators">
         {slideData.map((_, index) => (
-          <span 
-            key={index} 
+          <span
+            key={index}
             className={`dot ${index === getRealIndex() ? 'active' : ''}`}
             onClick={() => handleDotClick(index)}
           ></span>
