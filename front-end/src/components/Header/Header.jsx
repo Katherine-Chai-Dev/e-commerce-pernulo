@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Nav from "../Nav/Nav";
 import "./Header.css";
-import { Layout, Tooltip, ConfigProvider, Input, Dropdown } from 'antd';
+import { Layout, Tooltip, ConfigProvider, Input, Dropdown, Badge } from 'antd';
 import { SearchOutlined, UserOutlined, CloseOutlined, ShoppingCartOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useProducts } from '../../context/ProductContext';
 import { useUser } from "../../context/UserContext";
+import { useCart } from '../../context/CartContext';
 
-const { Search } = Input;
+
 
 const Header = () => {
     const [showSearch, setShowSearch] = useState(false);
@@ -17,6 +18,8 @@ const Header = () => {
     const [searchParams] = useSearchParams();
     const { setSelectedNav } = useProducts();
     const { user, logout } = useUser();
+    const { cartItems } = useCart();
+    const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
 
     useEffect(() => {
@@ -67,9 +70,13 @@ const Header = () => {
     };
 
     const showSearchContent = (e) => {
-        setSearchValue(e.target.value);
+        const newValue = e.target.value;
+        setSearchValue(newValue);
+        
+        if (newValue === '' && location.pathname === '/search') {
+            navigate('/');
+        }
     };
-
     const handleSearch = (value) => {
         if (value.trim()) {
             setSelectedNav(null);
@@ -82,7 +89,7 @@ const Header = () => {
         if (!fullName) return '';
         return fullName.trim().split(' ')[0];
     };
-    
+
 
     return (
         <ConfigProvider
@@ -107,15 +114,15 @@ const Header = () => {
 
                     <div className="header-right">
                         <div className={`search-container ${showSearch ? 'expanded' : ''}`}>
-                            <Search
-                                placeholder="Search..."
-                                className="search-button"
-                                allowClear
-                                onSearch={handleSearch}
-                                autoFocus={showSearch}
-                                value={searchValue}
-                                onChange={showSearchContent}
-                            />
+                            <Input
+    placeholder="Search..."
+    className="search-input"
+    allowClear
+    onPressEnter={(e) => handleSearch(e.target.value)}
+    autoFocus={showSearch}
+    value={searchValue}
+    onChange={showSearchContent}
+/>
                         </div>
 
                         <div className="header-icons">
@@ -132,17 +139,32 @@ const Header = () => {
                                     />
                                 </Tooltip>
                             )}
-                            {user ? 
-                                <Dropdown menu={{ items }} placement="bottomRight">
-                                    <div className="user-account">
-                                        <UserOutlined className="user-icon" />
-                                        <div className="user-info">
-                                            <span className="user-greeting">Hi, {getFirstName(user.name)}</span>
-                                            <span className="user-account-text">Account</span>
-                                        </div>
+                            {user ?
+                                <>
+                                    <div
+                                        className="cart-badge-overlay"
+                                        onClick={() => navigate('/cart')}
+                                    >
+                                        <Badge
+                                            count={cartCount}
+                                            offset={[5, 0]}
+                                            size="small"
+                                        >
+                                            <ShoppingCartOutlined className="account-cart-icon" />
+                                        </Badge>
                                     </div>
-                                </Dropdown> 
-                                : 
+
+                                    <Dropdown menu={{ items }} placement="bottomRight">
+                                        <div className="user-account">
+                                            <UserOutlined className="user-icon" />
+                                            <div className="user-info">
+                                                <span className="user-greeting">Hi, {getFirstName(user.name)}</span>
+                                                <span className="user-account-text">Account</span>
+                                            </div>
+                                        </div>
+                                    </Dropdown>
+                                </>
+                                :
                                 <UserOutlined className="account-icon" onClick={() => { navigate('/login'); }} />
                             }
                         </div>

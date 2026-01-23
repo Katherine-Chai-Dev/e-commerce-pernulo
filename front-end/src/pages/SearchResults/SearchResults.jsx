@@ -1,7 +1,7 @@
 import "./SearchResults.css"
 import React, { useState, useEffect } from 'react';
-import { useSearchParams,useNavigate } from 'react-router-dom';
-import { Row, Col, Layout, Spin, Space,Button,Result  } from 'antd';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Row, Col, Layout, Spin, Space, Button, Result } from 'antd';
 import CardComponent from '../../components/Card/CardComponent';
 import { useProducts } from '../../context/ProductContext';
 
@@ -11,7 +11,7 @@ const SearchResults = () => {
     const query = searchParams.get('q');
     console.log("query", query)
     const navigate = useNavigate();
-  
+
     const { products, loading } = useProducts();
     if (loading) {
         return (
@@ -24,19 +24,19 @@ const SearchResults = () => {
 
     const filteredProducts = products?.filter(product => {
         const name = product.product_name.toLowerCase();
-        
+
         const search = query
             .toLowerCase()
             .replace(/[^a-z0-9\s]/g, '')
             .trim();
-    
+
         const variations = [
             search,
             search.endsWith('s') ? search.slice(0, -1) : search,
             search.endsWith('ss') ? search.slice(0, -2) : search,
             search + 's',
         ];
-    
+
         return variations.some(term => name.includes(term));
     });
 

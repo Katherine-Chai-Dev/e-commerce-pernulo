@@ -7,12 +7,11 @@ import { useCart } from '../../context/CartContext';
 import { useUser } from '../../context/UserContext';
 
 const Cart = () => {
-    const { user,loggingOut } = useUser();
+    const { user, loggingOut } = useUser();
     const navigate = useNavigate();
     const { cartItems, removeFromCart, updateQuantity } = useCart();
 
-
-
+    
     const incrementQuantity = (productId, currentQuantity) => {
         updateQuantity(productId, currentQuantity + 1);
     };
@@ -34,7 +33,7 @@ const Cart = () => {
         }, 0);
     };
 
-  
+
     const calculateSubtotal = () => {
         return cartItems.reduce((total, item) => {
             const price = item.discounted_price || item.original_price;
@@ -42,7 +41,7 @@ const Cart = () => {
         }, 0);
     };
 
-    
+
     const calculateSavings = () => {
         return cartItems.reduce((total, item) => {
             if (item.discount > 0 && item.discounted_price) {
@@ -61,7 +60,7 @@ const Cart = () => {
     const hasSavings = savings > 0;
 
     if (loggingOut) {
-        return null; 
+        return null;
     }
 
     return (
