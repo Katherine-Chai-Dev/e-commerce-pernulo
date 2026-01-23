@@ -10,7 +10,7 @@ const BuyNow = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { user } = useUser();
-  
+
     const [buyNowItem, setBuyNowItem] = useState(null);
 
     useEffect(() => {

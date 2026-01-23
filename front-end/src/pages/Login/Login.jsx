@@ -138,7 +138,7 @@ const LogIn = () => {
             }
 
             login(data);
-         
+
 
         } catch (error) {
             setErrors({ general: 'Something went wrong. Please try again.' });
@@ -164,7 +164,7 @@ const LogIn = () => {
                 }
 
                 login(data);
-                
+
 
             } catch (error) {
                 setErrors({ general: 'Something went wrong. Please try again.' });
@@ -183,7 +183,7 @@ const LogIn = () => {
         googleLogin();
     };
 
-   
+
     if (user || isLoading) {
         return (
             <div className="login-wrapper">
