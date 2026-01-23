@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import "../LogIn/LogIn.css";
+import "../Login/Login.css";
 
 const ResetPassword = () => {
     const [searchParams] = useSearchParams();
@@ -33,7 +33,6 @@ const ResetPassword = () => {
         </div>
     );
 
-    // Verify token on page load
     useEffect(() => {
         const verifyToken = async () => {
             if (!token) {
@@ -120,7 +119,6 @@ const ResetPassword = () => {
         );
     }
 
-    // Invalid token
     if (!isValidToken) {
         return (
             <div className="login-wrapper">
@@ -139,7 +137,7 @@ const ResetPassword = () => {
         );
     }
 
-    // Success state
+
     if (isSuccess) {
         return (
             <div className="login-wrapper">
