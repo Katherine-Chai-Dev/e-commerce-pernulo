@@ -1,4 +1,3 @@
-
 .header {
   color: #fff;
   min-height: 64px;
@@ -58,7 +57,6 @@
   gap: 12px;
 }
 
-
 .account-icon,
 .search-icon {
   color: #fff;
@@ -72,6 +70,46 @@
   opacity: 0.8;
 }
 
+/* User Account Dropdown Styles */
+.user-account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.user-account:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.user-icon {
+  font-size: 32px;
+  color: #fff;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.user-greeting {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.user-account-text {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Search Styles */
 .search-container {
   width: 0;
   overflow: hidden;
@@ -84,6 +122,36 @@
 
 .search-button {
   width: 300px;
+}
+.search-input {
+  width: 100%;
+  height: 40px !important;
+  border-radius: 20px !important;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+.search-input:hover,
+.search-input:focus {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.search-input .ant-input {
+  background-color: transparent !important;
+  color: #fff !important;
+}
+
+.search-input .ant-input::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.search-input .ant-input-clear-icon {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.search-input .ant-input-clear-icon:hover {
+  color: #fff !important;
 }
 
 .search-button .ant-input-affix-wrapper {
@@ -120,49 +188,62 @@
   display: none;
 }
 
+/* Cart badge Styles */
 
-.user-account {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.cart-badge-overlay {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  z-index: 1000;
   cursor: pointer;
-  padding: 8px 10px;
-  color: white;
-  flex-shrink: 0;
-  white-space: nowrap;
 }
 
-.user-account:hover {
-  opacity: 0.9;
+.account-wrapper {
+  position: relative;
+  display: inline-block;
 }
 
-.user-account .user-icon {
-  font-size: 24px;
-  color: white;
+.cart-badge-wrapper {
+  cursor: pointer;
 }
 
-.user-info {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
+.account-cart-badge {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  z-index: 10;
 }
 
-.user-greeting {
-  font-size: 12px;
-  font-weight: 600;
-  color: white;
-  max-width: 90px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.user-account-text {
+.account-cart-icon {
   font-size: 14px;
-  font-weight: 700;
-  color: white;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
+.account-cart-icon:hover {
+  color: #d4af37;
+  transform: scale(1.1);
+}
+
+.ant-badge-count {
+  background: #ff4d4f;
+  box-shadow: 0 2px 4px rgba(255, 77, 79, 0.3);
+  font-weight: 600;
+}
+
+.ant-badge-count-sm {
+  min-width: 16px;
+  height: 16px;
+  line-height: 16px;
+  font-size: 11px;
+}
+
+.ant-badge {
+  cursor: pointer;
+}
+
+/* Responsive Styles */
 @media screen and (max-width: 1700px) {
   .nav-logo {
     left: 40px;
@@ -171,10 +252,11 @@
 
 @media screen and (max-width: 1500px) {
   .nav-logo {
-    left: 10px;
+    left: 30px;
   }
+
   .header-right {
-    right: 15px;
+    right: 45px;
   }
 }
 
@@ -182,6 +264,7 @@
   .nav-logo {
     left: 20px;
   }
+
   .header-right {
     right: 40px;
   }
@@ -192,9 +275,11 @@
     left: 15px;
     height: clamp(60px, 8vw, 80px);
   }
+
   .search-container.expanded {
     width: 250px;
   }
+
   .search-button {
     width: 250px;
   }
@@ -204,26 +289,39 @@
   .header {
     padding-inline: 30px;
   }
+
   .nav-logo {
     left: 10px;
     height: clamp(50px, 7vw, 70px);
   }
+
   .header-right {
     right: 30px;
   }
+
   .search-container.expanded {
     width: 200px;
   }
+
   .search-button {
     width: 200px;
   }
 
-  
-  .user-info {
-    display: none;
-  }
+  /* User account responsive */
   .user-account {
-    padding: 4px;
+    padding: 6px 10px;
+  }
+
+  .user-icon {
+    font-size: 26px;
+  }
+
+  .user-greeting {
+    font-size: 12px;
+  }
+
+  .user-account-text {
+    font-size: 14px;
   }
 }
 
@@ -231,22 +329,36 @@
   .header {
     padding-inline: 15px;
   }
+
   .nav-logo {
     left: 5px;
     height: clamp(40px, 6vw, 55px);
   }
+
   .header-right {
     right: 15px;
     gap: 8px;
   }
+
   .header-icons {
     gap: 8px;
   }
+
   .search-container.expanded {
     width: 160px;
   }
+
   .search-button {
     width: 160px;
+  }
+
+
+  .user-info {
+    display: none;
+  }
+
+  .user-account {
+    padding: 6px;
   }
 }
 
@@ -254,34 +366,43 @@
   .header {
     padding-inline: 10px;
   }
+
   .nav-logo {
     left: 5px;
     height: clamp(35px, 5vw, 45px);
   }
+
   .header-right {
     right: 10px;
     gap: 5px;
   }
+
   .header-icons {
     gap: 6px;
   }
+
   .search-container.expanded {
     width: 120px;
   }
+
   .search-button {
     width: 120px;
   }
+
   .brand-name {
     font-size: 16px;
   }
+
   .brand-describe {
     font-size: 12px;
   }
+
   .account-icon,
   .search-icon {
     font-size: 18px;
   }
-  .user-account .user-icon {
-    font-size: 18px;
+
+  .user-icon {
+    font-size: 20px;
   }
 }

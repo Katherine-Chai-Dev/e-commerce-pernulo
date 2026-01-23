@@ -1,16 +1,17 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
-import "../LogIn/LogIn.css";
+import "../Login/Login.css";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Register = () => {
-    const { login } = useUser();
+    const { login, user } = useUser();
     const navigate = useNavigate();
 
-    const [name, setName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,10 +22,17 @@ const Register = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+    }, [user, navigate]);
+
     const validateEmail = (email) => {
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(email) && email.length <= 254;
     };
+
     const validatePassword = (password) => {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d\W]).{8,100}$/;
         return passwordRegex.test(password);
@@ -41,17 +49,32 @@ const Register = () => {
         </div>
     );
 
-    const handleNameChange = (e) => {
+    const handleFirstNameChange = (e) => {
         const value = e.target.value;
-        setName(value);
+        setFirstName(value);
         if (errors.general) {
-            setErrors(prev => ({ ...prev, general: '' }));
+            setErrors(prev => ({ ...prev, general: '', showGoogleLogin: false, showLoginLink: false }));
         }
-        if (touched.name) {
+        if (touched.firstName) {
             if (!value.trim()) {
-                setErrors(prev => ({ ...prev, name: 'Name is required' }));
+                setErrors(prev => ({ ...prev, firstName: 'First name is required' }));
             } else {
-                setErrors(prev => ({ ...prev, name: '' }));
+                setErrors(prev => ({ ...prev, firstName: '' }));
+            }
+        }
+    };
+
+    const handleLastNameChange = (e) => {
+        const value = e.target.value;
+        setLastName(value);
+        if (errors.general) {
+            setErrors(prev => ({ ...prev, general: '', showGoogleLogin: false, showLoginLink: false }));
+        }
+        if (touched.lastName) {
+            if (!value.trim()) {
+                setErrors(prev => ({ ...prev, lastName: 'Last name is required' }));
+            } else {
+                setErrors(prev => ({ ...prev, lastName: '' }));
             }
         }
     };
@@ -60,7 +83,7 @@ const Register = () => {
         const value = e.target.value;
         setEmail(value);
         if (errors.general) {
-            setErrors(prev => ({ ...prev, general: '' }));
+            setErrors(prev => ({ ...prev, general: '', showGoogleLogin: false, showLoginLink: false }));
         }
         if (touched.email) {
             if (!value) {
@@ -77,7 +100,7 @@ const Register = () => {
         const value = e.target.value;
         setPassword(value);
         if (errors.general) {
-            setErrors(prev => ({ ...prev, general: '' }));
+            setErrors(prev => ({ ...prev, general: '', showGoogleLogin: false, showLoginLink: false }));
         }
         if (touched.password) {
             if (!value) {
@@ -101,7 +124,7 @@ const Register = () => {
         const value = e.target.value;
         setConfirmPassword(value);
         if (errors.general) {
-            setErrors(prev => ({ ...prev, general: '' }));
+            setErrors(prev => ({ ...prev, general: '', showGoogleLogin: false, showLoginLink: false }));
         }
         if (touched.confirmPassword) {
             if (!value) {
@@ -117,11 +140,19 @@ const Register = () => {
     const handleBlur = (field) => {
         setTouched(prev => ({ ...prev, [field]: true }));
 
-        if (field === 'name') {
-            if (!name.trim()) {
-                setErrors(prev => ({ ...prev, name: 'Name is required' }));
+        if (field === 'firstName') {
+            if (!firstName.trim()) {
+                setErrors(prev => ({ ...prev, firstName: 'First name is required' }));
             } else {
-                setErrors(prev => ({ ...prev, name: '' }));
+                setErrors(prev => ({ ...prev, firstName: '' }));
+            }
+        }
+
+        if (field === 'lastName') {
+            if (!lastName.trim()) {
+                setErrors(prev => ({ ...prev, lastName: 'Last name is required' }));
+            } else {
+                setErrors(prev => ({ ...prev, lastName: '' }));
             }
         }
 
@@ -161,8 +192,12 @@ const Register = () => {
 
         const newErrors = {};
 
-        if (!name.trim()) {
-            newErrors.name = 'Name is required';
+        if (!firstName.trim()) {
+            newErrors.firstName = 'First name is required';
+        }
+
+        if (!lastName.trim()) {
+            newErrors.lastName = 'Last name is required';
         }
 
         if (!email) {
@@ -184,7 +219,7 @@ const Register = () => {
         }
 
         setErrors(newErrors);
-        setTouched({ name: true, email: true, password: true, confirmPassword: true });
+        setTouched({ firstName: true, lastName: true, email: true, password: true, confirmPassword: true });
 
         if (Object.keys(newErrors).length > 0) {
             return;
@@ -193,28 +228,92 @@ const Register = () => {
         setIsLoading(true);
 
         try {
+            const fullName = `${firstName.trim()} ${lastName.trim()}`;
+
             const response = await fetch("http://localhost:8000/api/register", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password, name: name.trim() })
+                body: JSON.stringify({ email, password, name: fullName })
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                setErrors({ general: data.error || 'Registration failed' });
+                if (data.code === 'EMAIL_EXISTS_GOOGLE') {
+                    setErrors({
+                        general: 'This email is already registered with Google.',
+                        showGoogleLogin: true
+                    });
+                } else if (data.code === 'EMAIL_EXISTS') {
+                    setErrors({
+                        general: 'This email is already registered.',
+                        showLoginLink: true
+                    });
+                } else {
+                    setErrors({ general: data.error || 'Registration failed' });
+                }
+                setIsLoading(false);
                 return;
             }
 
             login(data);
-            navigate('/');
 
         } catch (error) {
             setErrors({ general: 'Something went wrong. Please try again.' });
-        } finally {
             setIsLoading(false);
         }
     };
+
+    const googleLogin = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            try {
+                const response = await fetch('http://localhost:8000/api/auth/google', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ access_token: tokenResponse.access_token })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    setErrors({ general: data.error || 'Google login failed' });
+                    setIsLoading(false);
+                    return;
+                }
+
+                login(data);
+
+
+            } catch (error) {
+                setErrors({ general: 'Something went wrong. Please try again.' });
+                setIsLoading(false);
+            }
+        },
+        onError: () => {
+            setErrors({ general: 'Google login failed' });
+            setIsLoading(false);
+        },
+    });
+
+    const handleGoogleLogin = () => {
+        setIsLoading(true);
+        setErrors({});
+        googleLogin();
+    };
+
+
+    if (user || isLoading) {
+        return (
+            <div className="login-wrapper">
+                <div className="login-container">
+                    <div className="login-form" style={{ textAlign: 'center', padding: '60px 40px' }}>
+                        <div className="loading-spinner"></div>
+                        <p style={{ marginTop: '20px', color: '#666' }}>Creating account...</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="login-wrapper">
@@ -226,21 +325,60 @@ const Register = () => {
                     {errors.general && (
                         <div className="error-banner">
                             {errors.general}
+                            {errors.showGoogleLogin && (
+                                <div style={{ marginTop: '12px' }}>
+                                    <button
+                                        type="button"
+                                        className="google-btn"
+                                        onClick={handleGoogleLogin}
+                                        disabled={isLoading}
+                                    >
+                                        <img src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png" alt="Google" />
+                                        Sign in with Google
+                                    </button>
+                                </div>
+                            )}
+                            {errors.showLoginLink && (
+                                <div style={{ marginTop: '8px' }}>
+                                    <Link to="/login" className="register-link">
+                                        Sign In Instead
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     )}
 
-                    <label htmlFor="name">Name*</label>
-                    <input
-                        id="name"
-                        type="text"
-                        placeholder="Your name"
-                        value={name}
-                        onChange={handleNameChange}
-                        onBlur={() => handleBlur('name')}
-                        className={errors.name ? 'input-error' : ''}
-                        disabled={isLoading}
-                    />
-                    {errors.name && <span className="error-message">{errors.name}</span>}
+                    <div className="name-row">
+                        <div className="name-field">
+                            <label htmlFor="firstName">First Name*</label>
+                            <input
+                                id="firstName"
+                                type="text"
+                                placeholder="First name"
+                                value={firstName}
+                                onChange={handleFirstNameChange}
+                                onBlur={() => handleBlur('firstName')}
+                                className={errors.firstName ? 'input-error' : ''}
+                                disabled={isLoading}
+                            />
+                            {errors.firstName && <span className="error-message">{errors.firstName}</span>}
+                        </div>
+
+                        <div className="name-field">
+                            <label htmlFor="lastName">Last Name*</label>
+                            <input
+                                id="lastName"
+                                type="text"
+                                placeholder="Last name"
+                                value={lastName}
+                                onChange={handleLastNameChange}
+                                onBlur={() => handleBlur('lastName')}
+                                className={errors.lastName ? 'input-error' : ''}
+                                disabled={isLoading}
+                            />
+                            {errors.lastName && <span className="error-message">{errors.lastName}</span>}
+                        </div>
+                    </div>
 
                     <label htmlFor="email">Email*</label>
                     <input
@@ -276,7 +414,9 @@ const Register = () => {
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </div>
-                    {errors.password && passwordErrorMessage}
+
+                    {errors.password === 'required' && <span className="error-message">Password is required</span>}
+                    {errors.password === 'invalid' && passwordErrorMessage}
 
                     <label htmlFor="confirmPassword">Confirm Password*</label>
                     <div className="password-input-wrapper">
@@ -305,7 +445,7 @@ const Register = () => {
                     </button>
 
                     <p className="signup-text">
-                        Already have an account? <Link to="/login" >Sign In</Link>
+                        Already have an account? <Link to="/login">Sign In</Link>
                     </p>
                 </form>
             </div>

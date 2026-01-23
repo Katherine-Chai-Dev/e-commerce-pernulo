@@ -1,10 +1,9 @@
-
-.nav-container{
+.nav-container {
     width: 100%;
 }
 
-.nav{
-    background-color: #009B9E; 
+.nav {
+    background-color: #009B9E;
     font-size: 16px;
     font-weight: 500;
     border-bottom: none;
@@ -13,7 +12,7 @@
 
 }
 
-.ant-menu-title-content{
+.ant-menu-title-content {
     color: #fff !important;
 }
 
@@ -35,7 +34,7 @@
 
 .nav .ant-menu-item-selected .ant-menu-title-content,
 .nav .ant-menu-item-active .ant-menu-title-content {
-    color:  black!important; 
+    color: black !important;
 }
 
 .ant-menu-submenu-popup .ant-menu-item {
@@ -47,7 +46,7 @@
     .nav {
         font-size: 15px;
     }
-    
+
     .nav .ant-menu-item,
     .nav .ant-menu-submenu-title {
         padding-inline: 18px !important;
@@ -58,7 +57,7 @@
     .nav {
         font-size: 14px;
     }
-    
+
     .nav .ant-menu-item,
     .nav .ant-menu-submenu-title {
         padding-inline: 16px !important;
@@ -69,7 +68,7 @@
     .nav {
         font-size: 13px;
     }
-    
+
     .nav .ant-menu-item,
     .nav .ant-menu-submenu-title {
         padding-inline: 14px !important;
@@ -80,7 +79,7 @@
     .nav {
         font-size: 12px;
     }
-    
+
     .nav .ant-menu-item,
     .nav .ant-menu-submenu-title {
         padding-inline: 12px !important;
@@ -91,7 +90,7 @@
     .nav {
         font-size: 11px;
     }
-    
+
     .nav .ant-menu-item,
     .nav .ant-menu-submenu-title {
         padding-inline: 10px !important;
@@ -102,7 +101,7 @@
     .nav {
         font-size: 10px;
     }
-    
+
     .nav .ant-menu-item,
     .nav .ant-menu-submenu-title {
         padding-inline: 8px !important;
@@ -113,7 +112,7 @@
     .nav {
         font-size: 9px;
     }
-    
+
     .nav .ant-menu-item,
     .nav .ant-menu-submenu-title {
         padding-inline: 6px !important;
@@ -124,7 +123,7 @@
     .nav {
         font-size: 8px;
     }
-    
+
     .nav .ant-menu-item,
     .nav .ant-menu-submenu-title {
         padding-inline: 4px !important;

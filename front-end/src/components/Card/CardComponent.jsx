@@ -5,7 +5,15 @@ import { useNavigate } from 'react-router-dom';
 
 const CardComponent = ({ product }) => {
     const navigate = useNavigate()
-    console.log(product.image_paths[0])
+    const handleBuyNow = (e) => {
+        e.stopPropagation(); 
+        navigate('/buy-now', {
+            state: {
+                product: product,
+                quantity: 1
+            }
+        });
+    };
     return (
         <ConfigProvider
             theme={{
@@ -42,7 +50,7 @@ const CardComponent = ({ product }) => {
                                             ${product.original_price}
                                         </span>
                                     </p>
-                                    <Button variant="solid" className="card-button" size="small">
+                                    <Button variant="solid" className="card-button" size="small" onClick={handleBuyNow}>
                                         Buy now
                                     </Button>
                                 </div>
@@ -51,7 +59,7 @@ const CardComponent = ({ product }) => {
                                     <span className="product-price">
                                         ${product.original_price}
                                     </span>
-                                    <Button variant="solid" className="card-button" size="small">
+                                    <Button variant="solid" className="card-button" size="small" onClick={handleBuyNow}>
                                         Buy now
                                     </Button>
                                 </div>

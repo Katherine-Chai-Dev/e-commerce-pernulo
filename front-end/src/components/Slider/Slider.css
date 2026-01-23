@@ -47,7 +47,7 @@
 
 .slide-title {
   font-family: "Gloock", serif;
-  font-size: 2.5rem; 
+  font-size: 2.5rem;
   font-weight: 700;
   margin: 0 0 2px 0;
   color: #fff;
@@ -59,7 +59,7 @@
   font-family: "Montserrat", sans-serif;
 
 
-  font-size: 1.2rem; 
+  font-size: 1.2rem;
   font-weight: 400;
   margin: 0;
   color: #f0f0f0;
@@ -136,7 +136,6 @@
   background-color: #333;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .slider {
     width: 95%;
