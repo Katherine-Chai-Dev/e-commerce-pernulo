@@ -1,4 +1,4 @@
-import {  Space } from 'antd';
+import { Space } from 'antd';
 import "./CardListTitle.css"
 const CardListTitle = () => {
     return (

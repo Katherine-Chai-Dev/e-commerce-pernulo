@@ -375,7 +375,6 @@ def send_reset_email(to_email, reset_link):
         message["From"] = sender_email.strip()
         message["To"] = to_email.strip()
         message["Subject"] = "Reset Your Password - Pernulo Pearl Jewelry"
-
         text_body = (
             "Hi,\n\n"
             "We received a request to reset your password for your Pernulo Pearl Jewelry account.\n\n"
@@ -386,7 +385,6 @@ def send_reset_email(to_email, reset_link):
             "Best regards,\n"
             "Pernulo Pearl Jewelry Team"
         )
-
         html_body = f"""
         <html>
             <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
