@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const CardComponent = ({ product }) => {
     const navigate = useNavigate()
     const handleBuyNow = (e) => {
-        e.stopPropagation(); 
+        e.stopPropagation();
         navigate('/buy-now', {
             state: {
                 product: product,
@@ -39,8 +39,8 @@ const CardComponent = ({ product }) => {
                         />
                     }
                 >
-                    <Card.Meta 
-                        title={product.product_name} 
+                    <Card.Meta
+                        title={product.product_name}
                         description={
                             Number(product.discount) > 0 ? (
                                 <div className="product-description">
@@ -64,7 +64,7 @@ const CardComponent = ({ product }) => {
                                     </Button>
                                 </div>
                             )
-                        } 
+                        }
                     />
                 </Card>
             </div>

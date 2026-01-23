@@ -21,9 +21,9 @@ const Contact = () => {
                     <div className="contact-email-wrapper">
                         <span className="contact-email">pernulo.pearl.jewelry@gmail.com</span>
                     </div>
-                    <Button 
-                        type="primary" 
-                        size="large" 
+                    <Button
+                        type="primary"
+                        size="large"
                         icon={<SendOutlined />}
                         className="contact-button"
                         href="mailto:pernulo.pearl.jewelry@gmail.com"
