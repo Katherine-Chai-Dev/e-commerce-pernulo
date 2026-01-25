@@ -26,12 +26,6 @@ class Product(SQLModel, table=True):
     )
     quantity_in_stock: int = Field(default=0, ge=0)
     quantity_sold: int = Field(default=0, ge=0)
-    revenue: Decimal = Field(
-        default=Decimal("0.00"), ge=0, max_digits=10, decimal_places=2
-    )
-    total_revenue: Decimal = Field(
-        default=Decimal("0.00"), ge=0, max_digits=12, decimal_places=2
-    )
     created_at: Optional[datetime] = Field(default_factory=datetime.utcnow)
 
     def calculate_discounted_price(self):
@@ -58,8 +52,6 @@ class ProductResponse(SQLModel):
     original_price: Decimal
     discount: Decimal
     discounted_price: Decimal
-    revenue: Decimal
-    total_revenue: Decimal
     image_paths: List[str] = []
     gemstone: Optional[str] = None
     materials: Optional[str] = None
