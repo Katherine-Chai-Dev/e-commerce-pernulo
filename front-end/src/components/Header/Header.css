@@ -51,10 +51,14 @@
   margin-top: 10px;
 }
 
+.header-right.logged-in {
+  right: 100px;
+}
+
 .header-icons {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
 }
 
 .account-icon,
@@ -188,47 +192,36 @@
   display: none;
 }
 
-/* Cart badge Styles */
-
-.cart-badge-overlay {
-  position: absolute;
-  top: -2px;
-  right: 0;
-  z-index: 1000;
+/* Cart Icon Styles */
+.cart-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
 }
 
-.account-wrapper {
-  position: relative;
-  display: inline-block;
+.cart-icon-wrapper:hover {
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
-.cart-badge-wrapper {
-  cursor: pointer;
-}
-
-.account-cart-badge {
-  position: absolute;
-  top: -2px;
-  right: 0;
-  z-index: 10;
-}
-
-.account-cart-icon {
-  font-size: 14px;
+.cart-icon {
+  font-size: 32px;
   color: #ffffff;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.account-cart-icon:hover {
+.cart-icon:hover {
   color: #d4af37;
-  transform: scale(1.1);
 }
 
 .ant-badge-count {
-  background: #ff4d4f;
-  box-shadow: 0 2px 4px rgba(255, 77, 79, 0.3);
+  background: #ffffff;
+  color: #009B9E;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   font-weight: 600;
 }
 
@@ -258,6 +251,10 @@
   .header-right {
     right: 45px;
   }
+
+  .header-right.logged-in {
+    right: 30px;
+  }
 }
 
 @media screen and (max-width: 1300px) {
@@ -267,6 +264,10 @@
 
   .header-right {
     right: 40px;
+  }
+
+  .header-right.logged-in {
+    right: 25px;
   }
 }
 
@@ -323,6 +324,10 @@
   .user-account-text {
     font-size: 14px;
   }
+
+  .cart-icon {
+    font-size: 24px;
+  }
 }
 
 @media screen and (max-width: 700px) {
@@ -359,6 +364,14 @@
 
   .user-account {
     padding: 6px;
+  }
+
+  .cart-icon-wrapper {
+    padding: 6px;
+  }
+
+  .cart-icon {
+    font-size: 22px;
   }
 }
 
@@ -404,5 +417,13 @@
 
   .user-icon {
     font-size: 20px;
+  }
+
+  .cart-icon {
+    font-size: 18px;
+  }
+
+  .cart-icon-wrapper {
+    padding: 4px;
   }
 }
