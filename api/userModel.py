@@ -17,6 +17,7 @@ class User(SQLModel, table=True):
     created_at: Optional[datetime] = Field(default_factory=datetime.utcnow)
     reset_token: Optional[str] = None
     reset_token_expires: Optional[datetime] = None
+    is_admin: bool = Field(default=False)
 
     def set_password(self, password: str):
         self.password_hash = bcrypt.hashpw(
@@ -71,6 +72,7 @@ class UserResponse(SQLModel):
     name: Optional[str] = None
     picture: Optional[str] = None
     auth_provider: str
+    is_admin: bool = False 
     created_at: Optional[datetime] = None
 
 
