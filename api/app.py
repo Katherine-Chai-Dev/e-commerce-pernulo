@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, send_from_directory
 import os
 import requests
+import cloudinary
+import cloudinary.uploader
 from flask_cors import CORS
 from sqlmodel import SQLModel, create_engine, Session, select
 from dotenv import dotenv_values
@@ -19,25 +21,104 @@ from datetime import datetime, timedelta
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import jwt
+from functools import wraps
 
 app = Flask(__name__)
 
-CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+CORS(app, origins=[
+    "http://localhost:3000",
+    "https://localhost:3000"
+], supports_credentials=True)
 
 config = dotenv_values(".env")
 DATABASE_URL = config.get("DATABASE_URL", "sqlite:///products.db")
+SECRET_KEY = config.get("SECRET_KEY", "secret-pernulo-pearl-jewelry-key")
 engine = create_engine(DATABASE_URL, echo=True)
+
+# Cloudinary Configuration 
+
+cloudinary.config(
+    cloud_name=config.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=config.get("CLOUDINARY_API_KEY"),
+    api_secret=config.get("CLOUDINARY_API_SECRET")
+)
 
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
 
-# Upload images
-UPLOAD_BASE = os.path.join(os.path.dirname(__file__), "uploads")
+# JWT Authentication 
+
+def generate_token(user_id: int, email: str, is_admin: bool = False) -> str:
+    payload = {
+        "user_id": user_id,
+        "email": email,
+        "is_admin": is_admin,
+        "exp": datetime.utcnow() + timedelta(days=7),
+        "iat": datetime.utcnow()
+    }
+    return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        
+        if "Authorization" in request.headers:
+            auth_header = request.headers["Authorization"]
+            if auth_header.startswith("Bearer "):
+                token = auth_header.split(" ")[1]
+        
+        if not token:
+            return jsonify({"error": "Token is missing", "code": "NO_TOKEN"}), 401
+        
+        try:
+            payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            request.current_user = payload
+        except jwt.ExpiredSignatureError:
+            return jsonify({"error": "Token has expired", "code": "TOKEN_EXPIRED"}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({"error": "Invalid token", "code": "INVALID_TOKEN"}), 401
+        
+        return f(*args, **kwargs)
+    
+    return decorated
+
+
+def admin_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        
+        if "Authorization" in request.headers:
+            auth_header = request.headers["Authorization"]
+            if auth_header.startswith("Bearer "):
+                token = auth_header.split(" ")[1]
+        
+        if not token:
+            return jsonify({"error": "Token is missing", "code": "NO_TOKEN"}), 401
+        
+        try:
+            payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            if not payload.get("is_admin"):
+                return jsonify({"error": "Admin access required", "code": "NOT_ADMIN"}), 403
+            request.current_user = payload
+        except jwt.ExpiredSignatureError:
+            return jsonify({"error": "Token has expired", "code": "TOKEN_EXPIRED"}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({"error": "Invalid token", "code": "INVALID_TOKEN"}), 401
+        
+        return f(*args, **kwargs)
+    
+    return decorated
+
+
+# Image Upload 
+
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "avif"}
-os.makedirs(os.path.join(UPLOAD_BASE, "products"), exist_ok=True)
-os.makedirs(os.path.join(UPLOAD_BASE, "profile"), exist_ok=True)
 
 
 def allowed_file(filename):
@@ -47,24 +128,17 @@ def allowed_file(filename):
 def save_image(file, folder="products"):
     if folder not in ["products", "profile"]:
         raise ValueError("folder must be 'products' or 'profile'")
-    filename = secure_filename(file.filename)
-    import time
-
-    name, ext = os.path.splitext(filename)
-    filename = f"{name}_{int(time.time())}{ext}"
-    filepath = os.path.join(UPLOAD_BASE, folder, filename)
-    file.save(filepath)
-    return filename
-
-
-@app.route("/uploads/<folder>/<filename>")
-def serve_image(folder, filename):
-    if folder not in ["products", "profile"]:
-        return "Invalid folder", 404
-    return send_from_directory(os.path.join(UPLOAD_BASE, folder), filename)
+    
+    result = cloudinary.uploader.upload(
+        file,
+        folder=f"pernulo/{folder}",
+        resource_type="image"
+    )
+    return result["secure_url"]
 
 
-# Product Routes
+#  Product Routes 
+
 @app.route("/api/products", methods=["GET"])
 def get_products():
     with Session(engine) as session:
@@ -89,6 +163,7 @@ def get_product(product_id):
 
 
 @app.route("/api/products", methods=["POST"])
+@admin_required
 def create_product():
     try:
         if request.is_json:
@@ -162,6 +237,7 @@ def create_product():
 
 
 @app.route("/api/products/<int:product_id>", methods=["PUT"])
+@admin_required
 def update_product(product_id):
     try:
         with Session(engine) as session:
@@ -217,6 +293,7 @@ def update_product(product_id):
 
 
 @app.route("/api/products/<int:product_id>", methods=["DELETE"])
+@admin_required
 def delete_product(product_id):
     try:
         with Session(engine) as session:
@@ -236,7 +313,8 @@ def delete_product(product_id):
         return jsonify({"error": str(e)}), 500
 
 
-# User Routes
+#  User Routes 
+
 @app.route("/api/register", methods=["POST"])
 def register():
     try:
@@ -274,7 +352,12 @@ def register():
         session.commit()
         session.refresh(user)
 
-        return jsonify(UserResponse.model_validate(user).model_dump()), 201
+        token = generate_token(user.id, user.email, user.is_admin)
+
+        response = UserResponse.model_validate(user).model_dump()
+        response["token"] = token
+
+        return jsonify(response), 201
 
 
 @app.route("/api/login", methods=["POST"])
@@ -312,7 +395,12 @@ def login():
                 401,
             )
 
-        return jsonify(UserResponse.model_validate(user).model_dump())
+        token = generate_token(user.id, user.email, user.is_admin)
+
+        response = UserResponse.model_validate(user).model_dump()
+        response["token"] = token
+
+        return jsonify(response)
 
 
 @app.route("/api/auth/google", methods=["POST"])
@@ -359,6 +447,30 @@ def google_auth():
         session.commit()
         session.refresh(user)
 
+        token = generate_token(user.id, user.email, user.is_admin)
+
+        response = UserResponse.model_validate(user).model_dump()
+        response["token"] = token
+
+        return jsonify(response)
+
+
+@app.route("/api/verify-token", methods=["GET"])
+@token_required
+def verify_token():
+    return jsonify({
+        "valid": True,
+        "user": request.current_user
+    })
+
+
+@app.route("/api/me", methods=["GET"])
+@token_required
+def get_current_user():
+    with Session(engine) as session:
+        user = session.get(User, request.current_user["user_id"])
+        if not user:
+            return jsonify({"error": "User not found"}), 404
         return jsonify(UserResponse.model_validate(user).model_dump())
 
 
@@ -514,9 +626,12 @@ def verify_reset_token():
         return jsonify({"valid": True, "email": user.email})
 
 
+# Admin User Management 
+
 @app.route("/api/users", methods=["GET"])
+@admin_required
 def get_all_users():
-    """Get all users - FOR TESTING ONLY"""
+    """Get all users - ADMIN ONLY"""
     with Session(engine) as session:
         users = session.exec(select(User)).all()
         results = [UserResponse.model_validate(user).model_dump() for user in users]
@@ -524,8 +639,9 @@ def get_all_users():
 
 
 @app.route("/api/users/<int:user_id>", methods=["DELETE"])
+@admin_required
 def delete_user(user_id):
-    """Delete user account - FOR TESTING ONLY"""
+    """Delete user account - ADMIN ONLY"""
     with Session(engine) as session:
         user = session.get(User, user_id)
         if not user:
@@ -540,4 +656,18 @@ def delete_user(user_id):
 
 if __name__ == "__main__":
     create_db_and_tables()
-    app.run(debug=True, port=8000)
+    
+    cert_file = "localhost+1.pem"
+    key_file = "localhost+1-key.pem"
+    
+    if os.path.exists(cert_file) and os.path.exists(key_file):
+        print("Running with HTTPS on https://localhost:8000")
+        app.run(
+            debug=True, 
+            port=8000,
+            ssl_context=(cert_file, key_file)
+        )
+    else:
+        print("⚠️  Running without HTTPS on http://localhost:8000")
+        print("   To enable HTTPS, run: mkcert localhost 127.0.0.1")
+        app.run(debug=True, port=8000)
