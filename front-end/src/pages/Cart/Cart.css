@@ -510,3 +510,254 @@
         width: 100% !important;
     }
 }
+
+@media (max-width: 360px) {
+    .cart-content {
+        padding: 10px 8px;
+    }
+
+    .cart-header h1 {
+        font-size: 22px;
+    }
+
+    .continue-shopping-btn {
+        height: 36px;
+        font-size: 12px;
+        padding: 0 16px;
+    }
+
+    .item-image-container {
+        height: 180px;
+    }
+
+    .item-name {
+        font-size: 15px;
+    }
+
+    .item-attribute {
+        font-size: 12px;
+    }
+
+    .item-price {
+        font-size: 18px;
+    }
+
+    .item-price-original {
+        font-size: 14px;
+    }
+
+    .item-discount-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+    }
+
+    .summary-card h2 {
+        font-size: 20px;
+    }
+
+    .summary-row {
+        font-size: 13px;
+    }
+
+    .total-amount {
+        font-size: 22px !important;
+    }
+
+    .checkout-btn {
+        height: 46px;
+        font-size: 14px;
+    }
+
+    .security-badges p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 250px) {
+    .cart-content {
+        padding: 5px 4px;
+    }
+
+    .cart-header {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+
+    .cart-header h1 {
+        font-size: 16px;
+    }
+
+    .continue-shopping-btn {
+        font-size: 10px;
+        padding: 0 10px;
+        height: 30px;
+    }
+
+    .item-image-container {
+        height: 120px;
+    }
+
+    .item-name {
+        font-size: 12px;
+    }
+
+    .item-attribute {
+        font-size: 10px;
+    }
+
+    .item-price {
+        font-size: 14px;
+    }
+
+    .item-price-original {
+        font-size: 11px;
+    }
+
+    .item-discount-badge {
+        font-size: 8px;
+        padding: 2px 4px;
+    }
+
+    .quantity-control {
+        width: 100%;
+        height: 30px;
+    }
+
+    .quantity-btn {
+        width: 30px;
+        height: 28px;
+    }
+
+    .quantity-display {
+        font-size: 13px;
+    }
+
+    .summary-card h2 {
+        font-size: 16px;
+    }
+
+    .summary-row {
+        font-size: 11px;
+    }
+
+    .total-amount {
+        font-size: 18px !important;
+    }
+
+    .checkout-btn {
+        height: 38px;
+        font-size: 12px;
+    }
+
+    .security-badges p {
+        font-size: 10px;
+    }
+
+    .remove-btn {
+        font-size: 12px !important;
+    }
+}
+
+@media (max-width: 200px) {
+    .cart-content {
+        padding: 2px !important;
+    }
+
+    .cart-header {
+        margin-top: 15px;
+        margin-bottom: 5px;
+        padding-bottom: 5px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .cart-header h1 {
+        font-size: 12px !important;
+    }
+
+
+    .cart-item-card .ant-card-body {
+        padding: 4px !important;
+    }
+
+    .item-image-container {
+        height: 80px !important;
+        width: 100% !important;
+    }
+
+    .item-name {
+        font-size: 10px !important;
+    }
+
+    .item-attribute {
+        display: none;
+    }
+
+    .item-price {
+        font-size: 11px !important;
+    }
+
+    .item-price-original {
+        font-size: 9px !important;
+    }
+
+    .item-discount-badge {
+        display: none;
+    }
+
+    .item-actions {
+        gap: 4px !important;
+    }
+
+    .quantity-control {
+        width: 100% !important;
+        height: 24px !important;
+    }
+
+    .quantity-btn {
+        width: 24px !important;
+        height: 22px !important;
+    }
+
+    .quantity-display {
+        font-size: 10px !important;
+    }
+
+    .remove-btn {
+        font-size: 10px !important;
+    }
+
+    .summary-card .ant-card-body {
+        padding: 8px !important;
+    }
+
+    .summary-card h2 {
+        font-size: 12px !important;
+    }
+
+    .summary-row {
+        font-size: 9px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .total-amount {
+        font-size: 13px !important;
+    }
+
+    .checkout-btn {
+        height: 28px !important;
+        font-size: 10px !important;
+    }
+
+    .security-badges {
+        margin-top: 8px;
+        padding-top: 6px;
+    }
+    
+    .security-badges p {
+        font-size: 8px !important;
+        margin: 2px 0 !important;
+    }
+
+}

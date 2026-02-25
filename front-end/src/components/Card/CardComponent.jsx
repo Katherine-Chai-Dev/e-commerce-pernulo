@@ -32,9 +32,9 @@ const CardComponent = ({ product }) => {
                     cover={
                         <img
                             draggable={false}
-                            style={{ minHeight: "180px", minWidth: "180px" }}
+                            // style={{ minHeight: "180px", minWidth: "180px" }}
                             alt="example"
-                            src={`http://localhost:8000/uploads/products/${product.image_paths[0]}`}
+                            src={product.image_paths[0]}
                             onClick={() => navigate(`/product-detail/${product.id}`)}
                         />
                     }
@@ -45,8 +45,8 @@ const CardComponent = ({ product }) => {
                             Number(product.discount) > 0 ? (
                                 <div className="product-description">
                                     <p className="product-price">
-                                        <span style={{ color: 'green' }}>${product.discounted_price}</span>
-                                        <span style={{ textDecoration: 'line-through', color: 'grey', padding: "0 3px", fontSize: "12px" }}>
+                                        <span className="discounted_price">${product.discounted_price}</span>
+                                        <span  className="original_price">
                                             ${product.original_price}
                                         </span>
                                     </p>

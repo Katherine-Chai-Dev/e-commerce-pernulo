@@ -5,6 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import "../Login/Login.css";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { API_BASE_URL } from '../../constants/api';
 
 const Register = () => {
     const { login, user } = useUser();
@@ -230,7 +231,7 @@ const Register = () => {
         try {
             const fullName = `${firstName.trim()} ${lastName.trim()}`;
 
-            const response = await fetch("http://localhost:8000/api/register", {
+            const response = await fetch(`${API_BASE_URL}/api/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password, name: fullName })
@@ -267,7 +268,7 @@ const Register = () => {
     const googleLogin = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
             try {
-                const response = await fetch('http://localhost:8000/api/auth/google', {
+                const response = await fetch(`${API_BASE_URL}/api/auth/google`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ access_token: tokenResponse.access_token })

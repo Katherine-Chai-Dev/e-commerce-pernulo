@@ -72,7 +72,7 @@ class UserResponse(SQLModel):
     name: Optional[str] = None
     picture: Optional[str] = None
     auth_provider: str
-    is_admin: bool = False 
+    is_admin: bool = False
     created_at: Optional[datetime] = None
 
 

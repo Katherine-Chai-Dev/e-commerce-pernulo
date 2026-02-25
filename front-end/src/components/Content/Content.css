@@ -1,28 +1,4 @@
-
-/* .content {
-    padding: 0 20px;
-    max-width: 1600px;
-    margin: 0 auto;
-}
-
-.slider {
-    padding: 0; 
-}
-
-
-.list-name {
-    margin-bottom: 5px;
-    display: block;
-    font-size: 24px;
-    font-weight: 600;
-    color: black;
-    font-family: fantasy;
-    height: 50px;
-    padding: 0px 10px;
-}
- */
-
- .search-results-content {
+.search-results-content {
     min-height: calc(100vh - 200px);
     padding: 40px 20px;
     background-color: #f5f5f5;
@@ -42,5 +18,3 @@
     text-align: center;
     width: 100%;
 }
-
-/* Rest of the CSS stays the same */

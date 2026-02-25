@@ -4,11 +4,9 @@ import { useProducts } from "../../context/ProductContext";
 const Broochs = () => {
     const { products, loading } = useProducts();
 
-
     const filteredProducts = products?.filter(product => product.product_name.toLowerCase().includes("brooch"));
     if (loading) return <p>Loading...</p>;
 
-    console.log("products", filteredProducts)
     return (
         <ConfigProvider
             theme={{
