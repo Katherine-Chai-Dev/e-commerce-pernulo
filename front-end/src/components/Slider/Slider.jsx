@@ -8,31 +8,31 @@ const Slider = () => {
 
   const slideData = [
     {
-      image: "/images/slider1.jpeg",
+      image: "https://res.cloudinary.com/dbl5qax3y/image/upload/v1771285164/slider8_mr5xua.jpg",
       title: "Elegant Pearl Collection",
       subtitle: "Discover timeless beauty",
       position: "center"
     },
     {
-      image: "/images/slider5.png",
+      image: "https://res.cloudinary.com/dbl5qax3y/image/upload/v1771286363/slider5_ynsrrb.jpg",
       title: "Handcrafted Jewelry",
       subtitle: "Made with love and care",
       position: "top-left"
     },
     {
-      image: "/images/slider3.jpeg",
+      image: "https://res.cloudinary.com/dbl5qax3y/image/upload/v1771285116/slider3_ybzi4p.jpg",
       title: "Luxury Designs",
       subtitle: "For every special moment",
       position: "bottom-right"
     },
     {
-      image: "/images/slider7.png",
+      image: "https://res.cloudinary.com/dbl5qax3y/image/upload/v1771285140/slider6_wmrj5j.jpg",
       title: "Premium Quality",
       subtitle: "Excellence in every detail",
       position: "top-right"
     },
     {
-      image: "/images/slider3.png",
+      image: "https://res.cloudinary.com/dbl5qax3y/image/upload/v1771286616/slider3_liqp55.jpg",
       title: "Natural Pearls",
       subtitle: "Authentic and rare",
       position: "bottom-left"

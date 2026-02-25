@@ -1,4 +1,4 @@
-import { Layout, Space,ConfigProvider, Col, Row } from 'antd';
+import { Layout, Space, ConfigProvider, Col, Row } from 'antd';
 import "./Content.css"
 import CardComponent from "../Card/CardComponent"
 

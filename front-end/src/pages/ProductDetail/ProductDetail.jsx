@@ -6,6 +6,7 @@ import { SketchOutlined, StarOutlined, GoldOutlined, ShoppingCartOutlined, Login
 import Toast from '../../components/Toast/Toast';
 import { useCart } from '../../context/CartContext';
 import { useUser } from '../../context/UserContext';
+import { API_BASE_URL } from '../../constants/api';
 
 const ProductDetail = () => {
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -23,7 +24,7 @@ const ProductDetail = () => {
             setShowLoginModal(true);
             return;
         }
-        
+
         const existingItem = cartItems.find(item => item.id === product.id);
         const message = existingItem ? 'Updated quantity in cart' : 'Added to cart';
         showToast(message, 'success');
@@ -45,7 +46,7 @@ const ProductDetail = () => {
     };
 
     useEffect(() => {
-        fetch(`http://localhost:8000/api/products/${id}`)
+        fetch(`${API_BASE_URL}/api/products/${id}`)
             .then(res => res.json())
             .then(data => {
                 setProduct(data);
@@ -80,7 +81,7 @@ const ProductDetail = () => {
                         <div className="main-image-container">
                             <div className="image-wrapper">
                                 <img
-                                    src={`http://localhost:8000/uploads/products/${product?.image_paths[selectedIndex]}`}
+                                    src={product?.image_paths[selectedIndex]}
                                     alt={product.product_name}
                                     className="main-image"
                                 />
@@ -94,7 +95,7 @@ const ProductDetail = () => {
                                     className={`thumbnail-button ${selectedIndex === index ? 'active' : ''}`}
                                 >
                                     <img
-                                        src={`http://localhost:8000/uploads/products/${image}`}
+                                        src={image}
                                         alt={product.product_name}
                                         className="thumbnail-image"
                                     />
@@ -176,16 +177,16 @@ const ProductDetail = () => {
                         Please sign in to your account to add items to your cart.
                     </p>
                     <div className="login-modal-buttons">
-                        <Button 
-                            type="primary" 
-                            size="large" 
+                        <Button
+                            type="primary"
+                            size="large"
                             onClick={handleGoToLogin}
                             className="login-modal-signin-btn"
                         >
                             Sign In
                         </Button>
-                        <Button 
-                            size="large" 
+                        <Button
+                            size="large"
                             onClick={() => setShowLoginModal(false)}
                             className="login-modal-cancel-btn"
                         >

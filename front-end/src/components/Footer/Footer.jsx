@@ -6,7 +6,7 @@ const Footer = () => {
     <ConfigProvider
       theme={{
         token: {
-          fontSize: 25
+          fontSize: 30
         },
       }}
     >

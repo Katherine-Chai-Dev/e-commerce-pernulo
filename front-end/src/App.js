@@ -20,7 +20,7 @@ import Login from "./pages/Login/Login"
 import Cart from './pages/Cart/Cart';
 import BuyNow from './pages/BuyNow/BuyNow';
 import Register from './pages/Register/Register';
-import ForgotPassword from './pages/Login/ForgotPassward';
+import ForgotPassword from './pages/Login/ForgotPassword';
 import ResetPassword from "./pages/Login/ResetPassword"
 import { CartProvider } from './context/CartContext';
 

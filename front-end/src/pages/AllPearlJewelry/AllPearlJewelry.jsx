@@ -5,7 +5,7 @@ import { useProducts } from "../../context/ProductContext";
 
 const AllPearlJewelry = () => {
     const { products } = useProducts();
-    console.log(products)
+   
 
     return (
         <ConfigProvider

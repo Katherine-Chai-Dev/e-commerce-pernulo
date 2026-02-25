@@ -1,6 +1,8 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import "../LogIn/LogIn.css";
+import "../Login/Login.css";
+import { API_BASE_URL } from '../../constants/api';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -16,7 +18,7 @@ const ForgotPassword = () => {
     const handleEmailChange = (e) => {
         const value = e.target.value;
         setEmail(value);
-        if (errors.general) {
+        if (errors.general || errors.email) {
             setErrors({});
         }
     };
@@ -37,7 +39,7 @@ const ForgotPassword = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch("http://localhost:8000/api/forgot-password", {
+            const response = await fetch(`${API_BASE_URL}/api/forgot-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })
@@ -46,7 +48,14 @@ const ForgotPassword = () => {
             const data = await response.json();
 
             if (!response.ok) {
-                setErrors({ general: data.error || 'Something went wrong' });
+                if (response.status === 404) {
+                    setErrors({
+                        notFound: true,
+                        general: "This email hasn't been registered yet."
+                    });
+                } else {
+                    setErrors({ general: data.error || 'Something went wrong' });
+                }
                 return;
             }
 
@@ -87,6 +96,11 @@ const ForgotPassword = () => {
                     {errors.general && (
                         <div className="error-banner">
                             {errors.general}
+                            {errors.notFound && (
+                                <p style={{ marginTop: '8px', marginBottom: 0 }}>
+                                    Please <Link to="/register" style={{ color: 'black', fontWeight: '600', textDecoration: 'underline' }}>create an account</Link> first.
+                                </p>
+                            )}
                         </div>
                     )}
 

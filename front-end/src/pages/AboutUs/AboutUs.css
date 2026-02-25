@@ -9,7 +9,6 @@
   margin: 0 auto;
 }
 
-/* Header Section */
 .about-us-header {
   text-align: center;
   margin-bottom: 48px;
@@ -24,7 +23,6 @@
   font-size: 18px;
 }
 
-/* Team Cards */
 .team-card {
   border-radius: 16px;
   overflow: hidden;
@@ -72,7 +70,6 @@
   border-radius: 20px;
 }
 
-/* Card Body */
 .card-body {
   padding: 24px;
 }
@@ -93,7 +90,7 @@
   margin: 16px 0;
 }
 
-/* Skills Section */
+
 .skills-section {
   margin-bottom: 12px;
 }
@@ -116,7 +113,7 @@
   border: none;
 }
 
-/* CTA Section */
+
 .cta-section {
   text-align: center;
   margin-top: 48px;
@@ -130,7 +127,7 @@
   margin-bottom: 8px !important;
 }
 
-/* Responsive Adjustments */
+
 @media (max-width: 768px) {
   .about-us-container {
     padding: 24px 16px;

@@ -120,7 +120,7 @@ const BuyNow = () => {
                             <div className="cart-item">
                                 <div className="item-image-container">
                                     <img
-                                        src={`http://localhost:8000/uploads/products/${buyNowItem.image_paths?.[0]}`}
+                                        src={buyNowItem.image_paths?.[0]}
                                         alt={buyNowItem.product_name}
                                         className="item-image"
                                         onClick={() => navigate(`/product-detail/${buyNowItem.id}`)}
