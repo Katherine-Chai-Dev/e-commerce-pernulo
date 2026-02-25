@@ -11,7 +11,7 @@ const Cart = () => {
     const navigate = useNavigate();
     const { cartItems, removeFromCart, updateQuantity } = useCart();
 
-    
+
     const incrementQuantity = (productId, currentQuantity) => {
         updateQuantity(productId, currentQuantity + 1);
     };
@@ -100,7 +100,7 @@ const Cart = () => {
                                     <div className="cart-item">
                                         <div className="item-image-container">
                                             <img
-                                                src={`http://localhost:8000/uploads/products/${item.image_paths?.[0]}`}
+                                                src={item.image_paths?.[0]}
                                                 alt={item.product_name}
                                                 className="item-image"
                                                 onClick={() => navigate(`/product-detail/${item.id}`)}

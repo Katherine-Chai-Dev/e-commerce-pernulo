@@ -8,7 +8,7 @@ const teamMembers = [
   {
     name: 'Qianying Chai',
     role: 'Full Stack Engineer',
-    image: 'http://localhost:8000/uploads/profile/engineer.jpeg',
+    image: 'https://res.cloudinary.com/dbl5qax3y/image/upload/v1771283944/engineer_ytaw5i.jpg',
     education: "Master's Degree at University of Reading",
     description: `Full stack engineer with expertise in building dynamic, scalable web applications from concept to deployment. Proficient in creating responsive, user-friendly interfaces using modern React patterns, CSS, and Flexbox. Experienced in developing robust RESTful APIs with FastAPI and Flask, with strong skills in database design (SQLAlchemy, SQLModel) and data validation (Pydantic). Passionate about writing clean, maintainable code, delivering exceptional user experiences, and continuously learning.`,
     skills: {
@@ -32,7 +32,7 @@ const teamMembers = [
   {
     name: 'Xiaoming Huang',
     role: 'Master Pearl Jewelry Designer',
-    image: 'http://localhost:8000/uploads/profile/jewelry-designer.png',
+    image: 'https://res.cloudinary.com/dbl5qax3y/image/upload/v1771283935/jewelry-designer-1_gjc98b.png',
     education: 'B.A. in Design Studies, San José State University',
     description:
       "Over 10 years of experience specializing in handcrafted pearl jewelry, with more than 6,000 pieces created. Every piece is meticulously handmade using 100% genuine, untreated pearls—preserving their natural luster and beauty.",

@@ -19,7 +19,7 @@ const Contact = () => {
                         Have a question or want to work together? We'd love to hear from you.
                     </Text>
                     <div className="contact-email-wrapper">
-                        <span className="contact-email">pernulo.pearl.jewelry@gmail.com</span>
+                        <span className="contact-email">pernulo.pearl.studio@gmail.com</span>
                     </div>
                     <Button
                         type="primary"

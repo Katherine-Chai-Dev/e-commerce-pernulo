@@ -5,6 +5,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate, Link } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { API_BASE_URL } from '../../constants/api';
 
 const LogIn = () => {
     const { login, user } = useUser();
@@ -108,7 +109,7 @@ const LogIn = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch("http://localhost:8000/api/login", {
+            const response = await fetch(`${API_BASE_URL}/api/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
@@ -149,7 +150,7 @@ const LogIn = () => {
     const googleLogin = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
             try {
-                const response = await fetch('http://localhost:8000/api/auth/google', {
+                const response = await fetch(`${API_BASE_URL}/api/auth/google`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ access_token: tokenResponse.access_token })

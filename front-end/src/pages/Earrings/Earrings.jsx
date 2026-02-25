@@ -4,8 +4,6 @@ import { useProducts } from "../../context/ProductContext";
 const Earrings = () => {
     const { products, loading } = useProducts();
 
-    console.log("products", products)
-
     const filteredProducts = products?.filter(product => product.product_name.toLowerCase().includes("earrings"));
     if (loading) return <p>Loading...</p>;
 

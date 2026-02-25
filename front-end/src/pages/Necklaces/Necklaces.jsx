@@ -4,8 +4,6 @@ import CardComponent from '../../components/Card/CardComponent';
 import { useProducts } from "../../context/ProductContext";
 const Necklaces = () => {
     const { products, loading } = useProducts();
-    console.log("products", products)
-
     const filteredProducts = products?.filter(product => product.product_name.toLowerCase().includes("necklace"));
     if (loading) return <p>Loading...</p>;
 

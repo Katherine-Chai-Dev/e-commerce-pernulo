@@ -26,22 +26,23 @@ from functools import wraps
 
 app = Flask(__name__)
 
-CORS(app, origins=[
-    "http://localhost:3000",
-    "https://localhost:3000"
-], supports_credentials=True)
+CORS(
+    app,
+    origins=["http://localhost:3000", "https://localhost:3000"],
+    supports_credentials=True,
+)
 
 config = dotenv_values(".env")
 DATABASE_URL = config.get("DATABASE_URL", "sqlite:///products.db")
 SECRET_KEY = config.get("SECRET_KEY", "secret-pernulo-pearl-jewelry-key")
 engine = create_engine(DATABASE_URL, echo=True)
 
-# Cloudinary Configuration 
+# Cloudinary Configuration
 
 cloudinary.config(
     cloud_name=config.get("CLOUDINARY_CLOUD_NAME"),
     api_key=config.get("CLOUDINARY_API_KEY"),
-    api_secret=config.get("CLOUDINARY_API_SECRET")
+    api_secret=config.get("CLOUDINARY_API_SECRET"),
 )
 
 
@@ -49,7 +50,8 @@ def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
 
-# JWT Authentication 
+# JWT Authentication
+
 
 def generate_token(user_id: int, email: str, is_admin: bool = False) -> str:
     payload = {
@@ -57,7 +59,7 @@ def generate_token(user_id: int, email: str, is_admin: bool = False) -> str:
         "email": email,
         "is_admin": is_admin,
         "exp": datetime.utcnow() + timedelta(days=7),
-        "iat": datetime.utcnow()
+        "iat": datetime.utcnow(),
     }
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
@@ -66,15 +68,15 @@ def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
-        
+
         if "Authorization" in request.headers:
             auth_header = request.headers["Authorization"]
             if auth_header.startswith("Bearer "):
                 token = auth_header.split(" ")[1]
-        
+
         if not token:
             return jsonify({"error": "Token is missing", "code": "NO_TOKEN"}), 401
-        
+
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
             request.current_user = payload
@@ -82,9 +84,9 @@ def token_required(f):
             return jsonify({"error": "Token has expired", "code": "TOKEN_EXPIRED"}), 401
         except jwt.InvalidTokenError:
             return jsonify({"error": "Invalid token", "code": "INVALID_TOKEN"}), 401
-        
+
         return f(*args, **kwargs)
-    
+
     return decorated
 
 
@@ -92,31 +94,34 @@ def admin_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
-        
+
         if "Authorization" in request.headers:
             auth_header = request.headers["Authorization"]
             if auth_header.startswith("Bearer "):
                 token = auth_header.split(" ")[1]
-        
+
         if not token:
             return jsonify({"error": "Token is missing", "code": "NO_TOKEN"}), 401
-        
+
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
             if not payload.get("is_admin"):
-                return jsonify({"error": "Admin access required", "code": "NOT_ADMIN"}), 403
+                return (
+                    jsonify({"error": "Admin access required", "code": "NOT_ADMIN"}),
+                    403,
+                )
             request.current_user = payload
         except jwt.ExpiredSignatureError:
             return jsonify({"error": "Token has expired", "code": "TOKEN_EXPIRED"}), 401
         except jwt.InvalidTokenError:
             return jsonify({"error": "Invalid token", "code": "INVALID_TOKEN"}), 401
-        
+
         return f(*args, **kwargs)
-    
+
     return decorated
 
 
-# Image Upload 
+# Image Upload
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "avif"}
 
@@ -128,16 +133,15 @@ def allowed_file(filename):
 def save_image(file, folder="products"):
     if folder not in ["products", "profile"]:
         raise ValueError("folder must be 'products' or 'profile'")
-    
+
     result = cloudinary.uploader.upload(
-        file,
-        folder=f"pernulo/{folder}",
-        resource_type="image"
+        file, folder=f"pernulo/{folder}", resource_type="image"
     )
     return result["secure_url"]
 
 
-#  Product Routes 
+#  Product Routes
+
 
 @app.route("/api/products", methods=["GET"])
 def get_products():
@@ -313,7 +317,8 @@ def delete_product(product_id):
         return jsonify({"error": str(e)}), 500
 
 
-#  User Routes 
+#  User Routes
+
 
 @app.route("/api/register", methods=["POST"])
 def register():
@@ -458,10 +463,7 @@ def google_auth():
 @app.route("/api/verify-token", methods=["GET"])
 @token_required
 def verify_token():
-    return jsonify({
-        "valid": True,
-        "user": request.current_user
-    })
+    return jsonify({"valid": True, "user": request.current_user})
 
 
 @app.route("/api/me", methods=["GET"])
@@ -626,7 +628,8 @@ def verify_reset_token():
         return jsonify({"valid": True, "email": user.email})
 
 
-# Admin User Management 
+# Admin User Management
+
 
 @app.route("/api/users", methods=["GET"])
 @admin_required
@@ -656,17 +659,13 @@ def delete_user(user_id):
 
 if __name__ == "__main__":
     create_db_and_tables()
-    
+
     cert_file = "localhost+1.pem"
     key_file = "localhost+1-key.pem"
-    
+
     if os.path.exists(cert_file) and os.path.exists(key_file):
         print("Running with HTTPS on https://localhost:8000")
-        app.run(
-            debug=True, 
-            port=8000,
-            ssl_context=(cert_file, key_file)
-        )
+        app.run(debug=True, port=8000, ssl_context=(cert_file, key_file))
     else:
         print("⚠️  Running without HTTPS on http://localhost:8000")
         print("   To enable HTTPS, run: mkcert localhost 127.0.0.1")
