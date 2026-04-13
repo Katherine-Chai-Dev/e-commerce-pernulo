@@ -28,7 +28,11 @@ app = Flask(__name__)
 
 CORS(
     app,
-    origins=["http://localhost:3000", "https://localhost:3000"],
+    origins=[
+        "http://localhost:3000",
+        "https://localhost:3000",
+        "https://pernulo.ftdalpha.com",
+    ],
     supports_credentials=True,
 )
 

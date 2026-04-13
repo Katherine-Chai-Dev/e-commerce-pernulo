@@ -6,7 +6,7 @@ const { Title, Text, Paragraph } = Typography;
 
 const teamMembers = [
   {
-    name: 'Qianying Chai',
+    name: 'Katherine Chai',
     role: 'Full Stack Engineer',
     image: 'https://res.cloudinary.com/dbl5qax3y/image/upload/v1771283944/engineer_ytaw5i.jpg',
     education: "Master's Degree at University of Reading",
@@ -30,7 +30,7 @@ const teamMembers = [
   },
 
   {
-    name: 'Xiaoming Huang',
+    name: 'Stephanie Huang',
     role: 'Master Pearl Jewelry Designer',
     image: 'https://res.cloudinary.com/dbl5qax3y/image/upload/v1771283935/jewelry-designer-1_gjc98b.png',
     education: 'B.A. in Design Studies, San José State University',
